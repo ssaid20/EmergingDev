@@ -1,16 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../../LogOutButton/LogOutButton';
-import './Nav.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { Link } from "react-router-dom";
+import LogOutButton from "../../LogOutButton/LogOutButton";
+import "./Nav.css";
+import { useSelector } from "react-redux";
 
 function Nav() {
   const user = useSelector((store) => store.user);
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+    <nav className="flex-between background-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
+      <Link to="/home" className="flex items-center gap-1">
+        {/* <h2 className="nav-title">Secure Submarine</h2> */}
+        <img
+          src="/assets/images/site-logo.svg"
+          width={33}
+          height={33}
+          alt="EmergingDev"
+        />
+        <p className="h2-bold font-spaceGrotesk text-purple-700">
+          Emerging{" "}
+          <span
+            className="h2-bold font-spaceGrotesk text-dark-100
+         dark:text-light-900 max-sm:hidden"
+          >
+            Dev
+          </span>
+        </p>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -40,7 +55,7 @@ function Nav() {
           About
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }
 

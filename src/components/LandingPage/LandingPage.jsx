@@ -15,6 +15,11 @@ function LandingPage() {
 
   return (
     <div className="container">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <h2>{heading}</h2>
 
       <div className="grid">

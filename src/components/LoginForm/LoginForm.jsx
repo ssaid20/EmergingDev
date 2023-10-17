@@ -25,7 +25,12 @@ function LoginForm() {
   }; // end login
 
   return (
+    
     <form className="formPanel" onSubmit={login}>
+      <br />
+      <br /> // get rid of this after you fix the navbar
+      <br />
+      <br />
       <h2>Login</h2>
       {errors.loginMessage && (
         <h3 className="alert" role="alert">
