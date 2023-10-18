@@ -5,20 +5,24 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector } from "react-redux";
 
 const LeftSidebar = () => {
+  // Extract user data from the Redux store
   const user = useSelector((store) => store.user);
-  // You might need another way to get the current pathname if you're using react-router
+  // Get the current URL path to determine active sidebar link
   const pathname = window.location.pathname;
 
   return (
+    // Sidebar container with styles and classes
     <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+      {/* Map over sidebar links and render each one */}
       <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((item) => {
+          // Check if the current path matches the item's route to set it as active
           const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route;
-
+           // If the route is for profile and user exists, append user ID to the route
           if(item.route === '/profile' && user) {
             item.route = `${item.route}/${user.id}`;
           }
-
+          // Render the sidebar link with appropriate styles based on its active state
           return (
             <Link
               to={item.route} 
@@ -72,7 +76,7 @@ const LeftSidebar = () => {
         </div>
       )}
 
-      {/* If a user is logged in, show these links */}
+      {/* If a user is logged in, show the logout button */}
       {user.id && (
           <>
             <LogOutButton className="navLink" />
@@ -83,3 +87,4 @@ const LeftSidebar = () => {
 }
 
 export default LeftSidebar;
+
