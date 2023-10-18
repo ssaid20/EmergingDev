@@ -36,9 +36,6 @@ function App() {
       {/* <Nav /> */}
       <Layout>
         <Routes>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          {/* <Navigate exact from="/" to="/home" replace /> */}
-
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
             // shows AboutPage at all times (logged in or not)
@@ -47,14 +44,7 @@ function App() {
             element={<AboutPage />}
           />
 
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <Route
-            path="/home"
-            element={<ProtectedRoute element={<Home />} />}
-          />
+          <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
 
           <Route
             path="/ask-question"
@@ -72,10 +62,7 @@ function App() {
             path="/user"
             element={<ProtectedRoute element={<Profile />} />}
           />
-          <Route
-            path="/tags"
-            element={<ProtectedRoute element={<Tags />} />}
-          />
+          <Route path="/tags" element={<ProtectedRoute element={<Tags />} />} />
 
           <Route
             exact
