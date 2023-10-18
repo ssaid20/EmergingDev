@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogOutButton from "../../LogOutButton/LogOutButton";
-import "./Nav.css";
 import { useSelector } from "react-redux";
-import LeftSidebar from "../LeftSidebar";
+import GlobalSearch from "../Search/GlobalSearch";
+import MobileNav from "./MobileNav";
 function Nav() {
   const user = useSelector((store) => store.user);
-
   return (
+    //fixed z-50
     <nav className="flex-between background-light900_dark200 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link to="/home" className="flex items-center gap-1">
         {/* <h2 className="nav-title">Secure Submarine</h2> */}
@@ -28,12 +28,10 @@ function Nav() {
         </p>
       </Link>
 
-      GlobalSearch
+      <GlobalSearch />
 
       <div className="flex-between gap-5">
-
         Theme
-
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
@@ -41,25 +39,24 @@ function Nav() {
             Login / Register
           </Link>
         )}
-
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Link className="navLink" to="/user">
+            {/* <Link className="navLink" to="/user">
               Home
-            </Link>
+            </Link> */}
 
-            <Link className="navLink" to="/info">
+            {/* <Link className="navLink" to="/info">
               Info Page
-            </Link>
+            </Link> */}
 
             <LogOutButton className="navLink" />
           </>
         )}
-
         <Link className="navLink" to="/about">
           About
         </Link>
+        <MobileNav />
       </div>
     </nav>
   );

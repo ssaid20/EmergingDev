@@ -1,11 +1,11 @@
 import React from 'react'
-import { Input } from "@/components/ui/input"
-
+import { Input } from "../../ui/input"
+import { useEffect, useState } from 'react';
 
 const GlobalSearch = () => {
-
+  const [search, setSearch] = useState('');
   return (
-    <div className="relative w-full max-w-[600px] max-lg:hidden" ref={searchContainerRef}>
+    <div className="relative w-full max-w-[600px] max-lg:hidden">
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">
         <img 
           src="/assets/icons/search.svg"

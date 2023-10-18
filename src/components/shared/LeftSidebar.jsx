@@ -1,6 +1,6 @@
-import { sidebarLinks } from '../../constants';
+import { sidebarLinks } from '../../constants/index';
 import { Link } from 'react-router-dom'; // Import from react-router-dom
-// import { Button } from '../ui/button';
+import { Button } from '../ui/button';
 import { useAuth } from '../../context/AuthContext'; // Update the path
 
 const LeftSidebar = () => {

@@ -2,10 +2,10 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,jsx}",
-    "./components/**/*.{js,jsx}",
-    "./app/**/*.{js,jsx}",
-    "./src/**/*.{js,jsx}",
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
   ],
   theme: {
     container: {
@@ -18,8 +18,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          500: "#1DA1F2", // New primary color
-          100: "#E5F2FD", // Lighter shade of the primary color
+          500: "#FF7000",
+          100: "#FFF1E6",
         },
         dark: {
           100: "#000000",
@@ -33,12 +33,11 @@ module.exports = {
           800: "#F4F6F8",
           850: "#FDFDFD",
           700: "#DCE3F1",
-          500: "#A4C0E1", // Adjusted to be a lighter shade of the primary color
-          400: "#BFD6EC", // Adjusted to be a lighter shade of the primary color
+          500: "#7B8EC8",
+          400: "#858EAD",
         },
-        "accent-blue": "#1DA1F2", // Same as the new primary color
+        "accent-blue": "#1DA1F2",
       },
-
       fontFamily: {
         inter: ["var(--font-inter)"],
         spaceGrotesk: ["var(--font-spaceGrotesk)"],
