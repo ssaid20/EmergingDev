@@ -42,7 +42,7 @@ body {
   }
 
   .primary-gradient {
-    background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+    background: linear-gradient(129deg, #1da1f2 0%, #5391b8 100%);
   }
 
   .dark-gradient {
@@ -63,7 +63,7 @@ body {
 }
 
 .active-theme {
-  filter: invert(53%) sepia(98%) saturate(3332%) hue-rotate(0deg)
+  filter: invert(53%) sepia(98%) saturate(3332%) hue-rotate(210deg)
     brightness(104%) contrast(106%) !important;
 }
 
@@ -76,7 +76,7 @@ body {
 }
 
 .primary-text-gradient {
-  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background: #1da1f2;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -108,22 +108,15 @@ body {
 
 .markdown a,
 code {
-  /* These are technically the same, but use both */
   overflow-wrap: break-word;
   word-wrap: break-word;
-
   -ms-word-break: break-all;
-  /* This is the dangerous one in WebKit, as it breaks things wherever */
   word-break: break-all;
-  /* Instead use this non-standard one: */
   word-break: break-word;
-
-  /* Adds a hyphen where the word breaks, if supported (No Blink) */
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
-
   padding: 2px;
   color: #ff7000 !important;
 }
@@ -137,14 +130,13 @@ code {
   width: 100%;
   display: block;
   overflow-x: auto;
-
   color: inherit !important;
 }
 /* Markdown End */
 
 /* Clerk */
 .cl-internal-b3fm6y {
-  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%) !important;
+  background: linear-gradient(129deg, #1da1f2 0%, #76b6dd 100%) !important;
 }
 
 .hash-span {

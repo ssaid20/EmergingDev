@@ -14,8 +14,6 @@ import InfoPage from "../InfoPage/InfoPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
-
-import "./App.css";
 import AskQuestion from "../Ask-Question/Ask-Question";
 import Layout from "../Layout/Layout";
 

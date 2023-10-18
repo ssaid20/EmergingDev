@@ -1,9 +1,7 @@
 import { Sheet, SheetContent, SheetClose, SheetTrigger } from "../../ui/sheet";
 import { Link } from "react-router-dom";
-import { Button } from "../../ui/button";
 import { sidebarLinks } from "../../../constants/index";
-import LogOutButton from "src/components/LogOutButton/LogOutButton";
-
+import { Button } from "src/components/ui/button";
 const NavContent = () => {
   const pathname = window.location.pathname;
 
@@ -82,7 +80,7 @@ const MobileNav = () => {
             <NavContent />
           </SheetClose>
 
-          <LogOutButton>
+          <Button>
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href="/login">
@@ -100,7 +98,7 @@ const MobileNav = () => {
                 </Link>
               </SheetClose>
             </div>
-          </LogOutButton>
+          </Button>
         </div>
       </SheetContent>
     </Sheet>
