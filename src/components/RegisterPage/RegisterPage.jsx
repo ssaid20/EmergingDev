@@ -1,6 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import RegisterForm from '../RegisterForm/RegisterForm';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import RegisterForm from "../Forms/RegisterForm";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function RegisterPage() {
             type="button"
             className="btn text-primary-500 hover:underline"
             onClick={() => {
-              navigate('/login', { replace: true });
+              navigate("/login", { replace: true });
             }}
           >
             Login

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 // CUSTOM COMPONENTS
-import RegisterForm from "../RegisterForm/RegisterForm";
+import RegisterForm from "../Forms/RegisterForm";
 
 function LandingPage() {
   const [heading, setHeading] = useState("Welcome");

@@ -6,6 +6,7 @@ export const themes = [
 
 export const sidebarLinks = [
   {
+    //change the route later
     imgURL: "/assets/icons/home.svg",
     route: "/home",
     label: "Home",
@@ -27,7 +28,7 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/icons/user.svg",
-    route: "/profile",
+    route: "/user",
     label: "Profile",
   },
   {

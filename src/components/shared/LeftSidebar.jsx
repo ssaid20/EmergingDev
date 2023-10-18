@@ -1,7 +1,7 @@
-import { sidebarLinks } from '../../constants/index';
-import { Link } from 'react-router-dom'; // Import from react-router-dom
-import { Button } from '../ui/button';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import { sidebarLinks } from "../../constants/index";
+import { Link } from "react-router-dom"; // Import from react-router-dom
+import { Button } from "../ui/button";
+import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector } from "react-redux";
 
 const LeftSidebar = () => {
@@ -17,15 +17,17 @@ const LeftSidebar = () => {
       <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((item) => {
           // Check if the current path matches the item's route to set it as active
-          const isActive = (pathname.includes(item.route) && item.route.length > 1) || pathname === item.route;
-           // If the route is for profile and user exists, append user ID to the route
-          if(item.route === '/profile' && user) {
+          const isActive =
+            (pathname.includes(item.route) && item.route.length > 1) ||
+            pathname === item.route;
+          // If the route is for profile and user exists, append user ID to the route
+          if (item.route === "/profile" && user) {
             item.route = `${item.route}/${user.id}`;
           }
           // Render the sidebar link with appropriate styles based on its active state
           return (
             <Link
-              to={item.route} 
+              to={item.route}
               key={item.label}
               className={`${
                 isActive
@@ -33,16 +35,22 @@ const LeftSidebar = () => {
                   : "text-dark300_light900"
               }  flex items-center justify-start gap-4 bg-transparent p-4`}
             >
-              <img 
+              <img
                 src={item.imgURL}
                 alt={item.label}
                 width={20}
                 height={20}
                 className={`${isActive ? "" : "invert-colors"}`}
               />
-              <p className={`${isActive ? 'base-bold' : 'base-medium'} max-lg:hidden`}>{item.label}</p>
+              <p
+                className={`${
+                  isActive ? "base-bold" : "base-medium"
+                } max-lg:hidden`}
+              >
+                {item.label}
+              </p>
             </Link>
-          )
+          );
         })}
       </div>
 
@@ -50,26 +58,28 @@ const LeftSidebar = () => {
         <div className="flex flex-col gap-3">
           <Link to="/login">
             <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-              <img 
+              <img
                 src="/assets/icons/account.svg"
                 alt="login"
                 width={20}
                 height={20}
                 className="invert-colors lg:hidden"
-              /> 
-              <span className="primary-text-gradient max-lg:hidden">Log In</span>
+              />
+              <span className="primary-text-gradient max-lg:hidden">
+                Log In
+              </span>
             </Button>
           </Link>
 
           <Link to="/registration">
-            <Button className='small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none'>
-              <img 
+            <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none">
+              <img
                 src="/assets/icons/sign-up.svg"
                 alt="sign up"
                 width={20}
                 height={20}
                 className="invert-colors lg:hidden"
-              /> 
+              />
               <span className="max-lg:hidden">Sign up</span>
             </Button>
           </Link>
@@ -78,13 +88,12 @@ const LeftSidebar = () => {
 
       {/* If a user is logged in, show the logout button */}
       {user.id && (
-          <>
-            <LogOutButton className="navLink" />
-          </>
-        )}
+        <>
+          <LogOutButton className="navLink" />
+        </>
+      )}
     </section>
-  )
-}
+  );
+};
 
 export default LeftSidebar;
-

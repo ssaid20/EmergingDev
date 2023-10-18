@@ -1,21 +1,18 @@
 import React, { useEffect } from "react";
 import { useNavigate, Navigate, Route, Routes } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
-
-import Nav from "../shared/Nav/Nav";
-import Footer from "../Footer/Footer";
-
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
 import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import AskQuestion from "../Ask-Question/Ask-Question";
 import Layout from "../Layout/Layout";
+import Collection from "../Collection/Collection";
+import Community from "../Community/Community";
+import Home from "../Home/Home";
+import Profile from "../Profile/Profile";
+import Tags from "../Tags/Tags";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,18 +52,29 @@ function App() {
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
           <Route
-            path="/user"
-            element={<ProtectedRoute element={<UserPage />} />}
-          />
-
-          <Route
-            path="/info"
-            element={<ProtectedRoute element={<InfoPage />} />}
+            path="/home"
+            element={<ProtectedRoute element={<Home />} />}
           />
 
           <Route
             path="/ask-question"
             element={<ProtectedRoute element={<AskQuestion />} />}
+          />
+          <Route
+            path="/collection"
+            element={<ProtectedRoute element={<Collection />} />}
+          />
+          <Route
+            path="/community"
+            element={<ProtectedRoute element={<Community />} />}
+          />
+          <Route
+            path="/user"
+            element={<ProtectedRoute element={<Profile />} />}
+          />
+          <Route
+            path="/tags"
+            element={<ProtectedRoute element={<Tags />} />}
           />
 
           <Route
