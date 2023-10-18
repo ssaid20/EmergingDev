@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './LandingPage.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./LandingPage.css";
 
 // CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+import RegisterForm from "../RegisterForm/RegisterForm";
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState("Welcome");
   const navigate = useNavigate();
 
   const onLogin = (event) => {
-    navigate('/login', { replace: true });
+    navigate("/login", { replace: true });
   };
 
   return (
-    <div className="container">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+    <div className="container flex flex-col w-full h-full ">
       <h2>{heading}</h2>
 
-      <div className="grid">
-        <div className="grid-col grid-col_8">
+      <div className="flex flex-col justify-center">
+        <div className="m-4">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
             id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus

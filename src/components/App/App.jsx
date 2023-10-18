@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, Navigate, Route, Routes, } from "react-router-dom";
+import { useNavigate, Navigate, Route, Routes } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -16,11 +16,12 @@ import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 
 import "./App.css";
+import AskQuestion from "../Ask-Question/Ask-Question";
+import Layout from "../Layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const user = useSelector((store) => store.user);
 
@@ -36,8 +37,9 @@ function App() {
   }, [navigate]);
 
   return (
-      <div>
-        <Nav />
+    <div>
+      {/* <Nav /> */}
+      <Layout>
         <Routes>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           {/* <Navigate exact from="/" to="/home" replace /> */}
@@ -62,6 +64,11 @@ function App() {
           <Route
             path="/info"
             element={<ProtectedRoute element={<InfoPage />} />}
+          />
+
+          <Route
+            path="/ask-question"
+            element={<ProtectedRoute element={<AskQuestion />} />}
           />
 
           <Route
@@ -114,8 +121,9 @@ function App() {
             <h1>404</h1>
           </Route> */}
         </Routes>
-        <Footer />
-      </div>
+      </Layout>
+      {/* <Footer /> */}
+    </div>
   );
 }
 
