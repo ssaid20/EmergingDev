@@ -1,5 +1,5 @@
 import { sidebarLinks } from "../../constants/index";
-import { Link } from "react-router-dom"; // Import from react-router-dom
+import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import LogOutButton from "../LogOutButton/LogOutButton";
 import { useSelector } from "react-redux";
