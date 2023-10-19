@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React from 'react'
 import { useSelector } from "react-redux";
 import Metric from "../shared/Metric";
-import { formatAndDivideNumber, getTimestamp } from '../../components';
+import { formatAndDivideNumber, getTimestamp } from '../../lib/utils';
 import RenderTag from '../shared/RenderTag';
 
 const QuestionCard = ({
