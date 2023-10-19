@@ -17,8 +17,7 @@ import { Button } from "../ui/button";
 import { QuestionsSchema } from "../../lib/validations";
 import { Badge } from "../ui/badge";
 
-
-const type = 'create'
+const type = "create";
 
 const Question = () => {
   const editorRef = useRef(null);
@@ -34,7 +33,7 @@ const Question = () => {
     },
   });
 
-   // Handler for form submission
+  // Handler for form submission
   function onSubmit(values) {
     setIsSubmitting(true);
     // TODO: Make an async call to the backend to create a question with the form data
@@ -43,37 +42,36 @@ const Question = () => {
   }
   // Handler for adding tags on pressing 'Enter'
   const handleInputKeyDown = (event, field) => {
-    if (event.key === 'Enter' && field.name === 'tags') {
+    if (event.key === "Enter" && field.name === "tags") {
       event.preventDefault();
 
-      const tagInput = event.target ;
+      const tagInput = event.target;
       const tagValue = tagInput.value.trim();
 
-      if(tagValue !== '') {
-        if(tagValue.length > 15) {
-          return form.setError('tags', {
-            type: 'required',
-            message: 'Tag must be less than 15 characters.'
-          })
+      if (tagValue !== "") {
+        if (tagValue.length > 15) {
+          return form.setError("tags", {
+            type: "required",
+            message: "Tag must be less than 15 characters.",
+          });
         }
 
-        if(!field.value.includes(tagValue)) {
-          form.setValue('tags', [...field.value, tagValue]);
-          tagInput.value = ''
-          form.clearErrors('tags');
+        if (!field.value.includes(tagValue)) {
+          form.setValue("tags", [...field.value, tagValue]);
+          tagInput.value = "";
+          form.clearErrors("tags");
         }
       } else {
         form.trigger();
       }
     }
-  }
+  };
   // Handler for removing tags
   const handleTagRemove = (tag, field) => {
     const newTags = field.value.filter((t) => t !== tag);
 
-    form.setValue('tags', newTags);
-  }
-
+    form.setValue("tags", newTags);
+  };
 
   // console.log("key", process.env.REACT_APP_PUBLIC_TINY_EDITOR_API_KEY);
 
@@ -116,8 +114,7 @@ const Question = () => {
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Editor
-                  // apiKey='REACT_PUBLIC_TINY_EDITOR_API_KEY'
-                  apiKey='vmx2i6bhr2m74a1wwrc6wj3it88w9o0ki4r13b5ycl24f7hj'
+                  apiKey={process.env.REACT_APP_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) => {
                     editorRef.current = editor;
                   }}
@@ -160,55 +157,61 @@ const Question = () => {
             </FormItem>
           )}
         />
-                <FormField
+        <FormField
           control={form.control}
           name="tags"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-semibold text-dark400_light800">Tags <span className="text-primary-500">*</span></FormLabel>
+              <FormLabel className="paragraph-semibold text-dark400_light800">
+                Tags <span className="text-primary-500">*</span>
+              </FormLabel>
               <FormControl className="mt-3.5">
                 <>
-                <Input 
-                className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                placeholder="Add tags..."
-                onKeyDown={(e) => handleInputKeyDown(e, field)}
-                />
-                
-                {field.value.length > 0 && (
-                  <div className="flex-start mt-2.5 gap-2.5">
-                    {field.value.map((tag) => (
-                      <Badge key={tag} className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize" 
-                      onClick={() => handleTagRemove(tag, field)}>
-                        {tag}
-                        <img 
-                          src="/assets/icons/close.svg"
-                          alt="Close icon"
-                          width={12}
-                          height={12}
-                          className="cursor-pointer object-contain invert-0 dark:invert"
-                        />
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+                  <Input
+                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                    placeholder="Add tags..."
+                    onKeyDown={(e) => handleInputKeyDown(e, field)}
+                  />
+
+                  {field.value.length > 0 && (
+                    <div className="flex-start mt-2.5 gap-2.5">
+                      {field.value.map((tag) => (
+                        <Badge
+                          key={tag}
+                          className="subtle-medium background-light800_dark300 text-light400_light500 flex items-center justify-center gap-2 rounded-md border-none px-4 py-2 capitalize"
+                          onClick={() => handleTagRemove(tag, field)}
+                        >
+                          {tag}
+                          <img
+                            src="/assets/icons/close.svg"
+                            alt="Close icon"
+                            width={12}
+                            height={12}
+                            className="cursor-pointer object-contain invert-0 dark:invert"
+                          />
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
                 </>
               </FormControl>
               <FormDescription className="body-regular mt-2.5 text-light-500">
-                Add up to 3 tags to describe what your question is about. You need to press enter to add a tag.
+                Add up to 3 tags to describe what your question is about. You
+                need to press enter to add a tag.
               </FormDescription>
               <FormMessage className="text-red-500" />
             </FormItem>
           )}
         />
-        <Button type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? (
-            <>
-              {type === 'edit' ? 'Editing...' : 'Posting...' }
-            </>
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>
-              {type === 'edit' ? 'Edit Question' : 'Ask a Question'}
-            </>
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>
