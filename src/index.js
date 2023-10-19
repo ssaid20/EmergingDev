@@ -7,6 +7,9 @@ import { ThemeProvider } from "./context/ThemeProvider";
 import { AuthProvider } from "./context/AuthContext";
 import App from "./components/App/App";
 import "./index.css";
+// import { config } from "dotenv";
+
+// config();
 
 const root = ReactDOM.createRoot(document.getElementById("react-root"));
 root.render(
