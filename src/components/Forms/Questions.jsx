@@ -34,14 +34,14 @@ const Question = () => {
     },
   });
 
-  // 2. Define a submit handler.
+   // Handler for form submission
   function onSubmit(values) {
-    // Do something with the form values.
     setIsSubmitting(true);
+    // TODO: Make an async call to the backend to create a question with the form data
 
     console.log(values);
   }
-
+  // Handler for adding tags on pressing 'Enter'
   const handleInputKeyDown = (event, field) => {
     if (event.key === 'Enter' && field.name === 'tags') {
       event.preventDefault();
@@ -67,7 +67,7 @@ const Question = () => {
       }
     }
   }
-
+  // Handler for removing tags
   const handleTagRemove = (tag, field) => {
     const newTags = field.value.filter((t) => t !== tag);
 
