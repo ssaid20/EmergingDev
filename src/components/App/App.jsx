@@ -13,6 +13,7 @@ import Community from "../Community/Community";
 import Home from "../Home/Home";
 import Profile from "../Profile/Profile";
 import Tags from "../Tags/Tags";
+import QuestionDetails from "../QuestionDetails/QuestionDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,8 @@ function App() {
             element={<ProtectedRoute element={<Profile />} />}
           />
           <Route path="/tags" element={<ProtectedRoute element={<Tags />} />} />
+          <Route path="/question/:id" element={<ProtectedRoute element={<QuestionDetails />} />} />
+
 
           <Route
             exact

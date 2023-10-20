@@ -17,13 +17,17 @@ import { Button } from "../ui/button";
 import { QuestionsSchema } from "../../lib/validations";
 import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "src/context/ThemeProvider";
 
 const type = "create";
 
 const Question = () => {
   const editorRef = useRef(null);
+  const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Get the state from the Redux store
   const store = useSelector((store) => store.question);
@@ -43,6 +47,7 @@ const Question = () => {
     setIsSubmitting(true);
     // TODO: Make an async call to the backend to create a question with the form data
     dispatch({ type: "POST_QUESTION_REQUEST", payload: values });
+    navigate("/home");
     console.log(values);
     setIsSubmitting(false);
   }
@@ -157,6 +162,8 @@ const Question = () => {
                         "alignright alignjustify | bullist numlist",
                       content_style:
                         "body { font-family:Inter; font-size:16px }",
+                      skin: mode === "dark" ? "oxide-dark" : "oxide",
+                      content_css: mode === "dark" ? "dark" : "light",
                     }}
                   />
                 </FormControl>
@@ -232,7 +239,5 @@ const Question = () => {
 };
 
 export default Question;
-
-
 
 // Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper nunc et odio pellentesque, quis.
