@@ -12,7 +12,11 @@ function* postQuestion(action) {
 function* fetchQuestion(action) {
   // console.log("actions: ", action);
   try {
-    const response = yield axios.get(`/api/question/${action.payload.id}`);
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    const response = yield axios.get(`/api/question/${action.payload.id}`, config);
     console.log("Response:", response.data);
     yield put({ type: "FETCH_QUESTION_SUCCESS", payload: response.data });
   } catch (error) {
@@ -33,7 +37,11 @@ function* editQuestion(action) {
 
 function* fetchAllQuestions() {
   try {
-    const response = yield axios.get("/api/question");
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    const response = yield axios.get("/api/question", config);
     yield put({ type: "FETCH_ALL_QUESTIONS_SUCCESS", payload: response.data });
   } catch (error) {
     yield put({ type: "FETCH_ALL_QUESTIONS_FAILURE", error: error.message });

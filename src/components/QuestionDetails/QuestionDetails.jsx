@@ -5,6 +5,7 @@ import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "../../lib/utils";
 import RenderTag from "../shared/RenderTag";
 import ParseHTML from '../shared/ParseHTML';
+import Answer from "../Forms/Answer";
 
 export default function QuestionDetails() {
   const { id } = useParams();
@@ -90,7 +91,7 @@ export default function QuestionDetails() {
       </div> */}
 
 
-      {/* <Answer /> */}
+      <Answer />
     </>
   );
 }

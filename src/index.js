@@ -17,11 +17,11 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
       <Provider store={store}>
-        <AuthProvider>
+        {/* <AuthProvider> */}
           <ThemeProvider>
             <App />
           </ThemeProvider>
-        </AuthProvider>
+        {/* </AuthProvider> */}
       </Provider>
     </React.StrictMode>
   </BrowserRouter>
