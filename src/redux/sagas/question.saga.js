@@ -10,7 +10,7 @@ function* postQuestion(action) {
   }
 }
 function* fetchQuestion(action) {
-  console.log("actions: ", action);
+  // console.log("actions: ", action);
   try {
     const response = yield axios.get(`/api/question/${action.payload.id}`);
     console.log("Response:", response.data);

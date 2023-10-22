@@ -61,37 +61,65 @@ router.put("/:id", (req, res) => {
       res.sendStatus(500);
     });
 });
-// GET request to retrieve individual question details
+// // GET request to retrieve individual question details
+// router.get('/:id', (req, res) => {
+//   // Assign id key to send as variable on pool.query
+//   const questionId = req.params.id;
+
+//   // SQL join query for M2M table relationships, STRING_AGG shows tags as a list separated by commas
+//   const queryText = `
+//     SELECT 
+//       questions.id, 
+//       questions.title, 
+//       questions.content, 
+//       questions.created_at, 
+//       STRING_AGG(tags.name, ', ') AS tags,
+//       u.username AS author
+//     FROM questions
+//     JOIN tag_questions ON tag_questions.question_id = questions.id
+//     JOIN tags ON tags.id = tag_questions.tag_id
+//     JOIN "user" AS u ON u.id = questions.author_id
+//     WHERE questions.id = $1
+//     GROUP BY questions.id, u.username;`;
+
+//   pool.query(queryText, [questionId])
+//     .then(result => {
+//       // Send our data back
+//       res.send(result.rows);
+//     }).catch(error => {
+//       console.log("error on server-side question details GET", error);
+//       res.sendStatus(500);
+//     });
+// });
+
 router.get('/:id', (req, res) => {
-  // Assign id key to send as variable on pool.query
   const questionId = req.params.id;
 
-  // SQL join query for M2M table relationships, STRING_AGG shows tags as a list separated by commas
   const queryText = `
-    SELECT 
-      questions.id, 
-      questions.title, 
-      questions.content, 
-      questions.created_at, 
-      STRING_AGG(tags.name, ', ') AS tags,
-      u.username AS author
-    FROM questions
-    JOIN tag_questions ON tag_questions.question_id = questions.id
-    JOIN tags ON tags.id = tag_questions.tag_id
-    JOIN "user" AS u ON u.id = questions.author_id
-    WHERE questions.id = $1
-    GROUP BY questions.id, u.username;`;
+  SELECT 
+  questions.id, 
+  questions.title, 
+  questions.content, 
+  questions.created_at, 
+  ARRAY_AGG(DISTINCT tags.name) AS tags,
+  ARRAY_AGG(DISTINCT answers.content) AS answers,
+  u.username AS author
+FROM questions
+LEFT JOIN tag_questions ON tag_questions.question_id = questions.id
+LEFT JOIN tags ON tags.id = tag_questions.tag_id
+LEFT JOIN answers ON answers.question_id = questions.id
+JOIN "user" AS u ON u.id = questions.author_id
+WHERE questions.id = $1
+GROUP BY questions.id, u.username;`;
 
   pool.query(queryText, [questionId])
     .then(result => {
-      // Send our data back
       res.send(result.rows);
     }).catch(error => {
       console.log("error on server-side question details GET", error);
       res.sendStatus(500);
     });
 });
-
 
 
 
