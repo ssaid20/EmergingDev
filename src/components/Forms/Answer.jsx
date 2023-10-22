@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -6,10 +7,8 @@ import { Editor } from "@tinymce/tinymce-react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Button } from "../ui/button";
@@ -18,12 +17,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "src/context/ThemeProvider";
 
+
+
 const Answer = () => {
+  const { id } = useParams();
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Get the state from the Redux store
+  const store = useSelector((store) => store.answer);
 
   const form = useForm({
     resolver: zodResolver(AnswerSchema),
@@ -32,13 +36,18 @@ const Answer = () => {
     },
   });
 
- 
   function createAnswer(values) {
     setIsSubmitting(true);
     // TODO: Make an async call to the backend to create answer with the form data
-    dispatch({ type: "POST_ANSWER_REQUEST", payload: values });
+    const payload = {
+      ...values,
+      question_id: parseInt(id, 10)
+    };
+    
+    dispatch({ type: "POST_ANSWER_REQUEST", payload});
+
     navigate("/home");
-    console.log(values);
+    console.log("payload",payload);
     setIsSubmitting(false);
   }
 
@@ -75,7 +84,7 @@ const Answer = () => {
             render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
-                <Editor
+                  <Editor
                     apiKey={process.env.REACT_APP_PUBLIC_TINY_EDITOR_API_KEY}
                     onInit={(evt, editor) => {
                       editorRef.current = editor;
@@ -121,11 +130,11 @@ const Answer = () => {
 
           <div className="flex justify-end">
             <Button
-              type="button"
+              type="submit"
               className="primary-gradient w-fit text-white"
-              disabled={isSubmitting}
+              disabled={store.isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>
           </div>
         </form>
