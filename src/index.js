@@ -7,6 +7,7 @@ import { ThemeProvider } from "./context/ThemeProvider";
 import { AuthProvider } from "./context/AuthContext";
 import App from "./components/App/App";
 import "./index.css";
+import "./styles/prism.css"
 // import { config } from "dotenv";
 
 // config();
