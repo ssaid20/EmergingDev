@@ -4,7 +4,7 @@ import QuestionCard from "../Cards/QuestionCard";
 
 const QuestionTab = ({ userId }) => {
   const dispatch = useDispatch();
-  const questions = useSelector((store) => store.question.allQuestions);
+  const questions = useSelector((store) => store.question.userQuestions);
 
   useEffect(() => {
     // Dispatch an action to fetch the user's questions

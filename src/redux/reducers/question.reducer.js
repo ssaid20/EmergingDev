@@ -4,6 +4,7 @@ const initialState = {
   postError: null,
   questionDetails: [],
   allQuestions: [],
+  userQuestions: [],
   isLoading: false,
   error: null,
 };
@@ -32,7 +33,7 @@ const questionReducer = (state = initialState, action) => {
     case "FETCH_USER_QUESTIONS_REQUEST":
       return { ...state, isLoading: true, error: null };
     case "FETCH_USER_QUESTIONS_SUCCESS":
-      return { ...state, allQuestions: action.payload, isLoading: false };
+      return { ...state, userQuestions: action.payload, isLoading: false };
     case "FETCH_USER_QUESTIONS_FAILURE":
       return { ...state, isLoading: false, error: action.error };
     default:

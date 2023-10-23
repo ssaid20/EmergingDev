@@ -3,6 +3,7 @@ const initialState = {
     postSuccess: false,
     postError: null,
     allanswers: [],
+    userAnswers: [],
     answerDetails: [],
     isLoadingAnswers: false,
     loadAnswersError: null,
@@ -22,6 +23,12 @@ const answerReducer = (state = initialState, action) => {
             return { ...state, allanswers: action.payload, isLoadingAnswers: false, answerDetails: action.answers };
         case 'FETCH_ANSWERS_FAILURE':
             return { ...state, allanswers: action.payload, isLoadingAnswers: false, loadAnswersError: action.error };
+        case "FETCH_USER_ANSWERS_REQUEST":
+            return { ...state, isLoading: true, error: null };
+        case "FETCH_USER_ANSWERS_SUCCESS":
+            return { ...state, userAnswers: action.payload, isLoading: false };
+        case "FETCH_USER_ANSWERS_FAILURE":
+            return { ...state, isLoading: false, error: action.error };
         default:
             return state;
     }

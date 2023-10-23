@@ -7,7 +7,6 @@ const {
 
 router.post("/", rejectUnauthenticated, (req, res) => {
   const { answer } = req.body;
-
   const insertAnswerQuery = `
         INSERT INTO "answers" ("content", "author_id", "question_id")
         VALUES ($1, $2, $3);

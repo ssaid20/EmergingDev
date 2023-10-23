@@ -6,7 +6,7 @@ import { Button } from '../ui/button';
 import ProfileLink from '../shared/ProfileLink';
 import Stats from '../shared/Stats';
 import QuestionTab from '../shared/QuestionTab';
-// import AnswersTab from '../shared/AnswersTab';
+import AnswersTab from '../shared/AnswerTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'; 
 
 function Profile() {
@@ -87,9 +87,9 @@ function Profile() {
             />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            {/* <AnswersTab 
+            <AnswersTab 
               userId={user.id}
-            /> */}
+            />
           </TabsContent>
         </Tabs>
       </div>
