@@ -49,4 +49,23 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+
+// Route to get questions for a specific user
+router.get('/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const queryText = `
+      SELECT * FROM "questions" 
+      WHERE "author_id" = $1
+      ORDER BY "created_at" DESC;
+    `; // Assuming you have a "questions" table and "author_id" column
+
+    const result = await pool.query(queryText, [userId]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching questions for user:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;

@@ -68,7 +68,7 @@ export default function QuestionDetails() {
         <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
-          value={formatAndDivideNumber(questionDetails.answers.length)} // Assuming answers is an array
+          value={formatAndDivideNumber(questionDetails.answers.length)} //
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />

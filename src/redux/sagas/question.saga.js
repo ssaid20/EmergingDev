@@ -48,11 +48,27 @@ function* fetchAllQuestions() {
   }
 }
 
+function* fetchUserQuestions(action) {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    const response = yield axios.get(`/api/user/${action.payload.userId}`, config);
+    yield put({ type: "FETCH_USER_QUESTIONS_SUCCESS", payload: response.data });
+  } catch (error) {
+    yield put({ type: "FETCH_USER_QUESTIONS_FAILURE", error: error.message });
+  }
+}
+
+
+
 function* watchQuestionSaga() {
   yield takeLatest("POST_QUESTION_REQUEST", postQuestion);
   yield takeLatest("FETCH_QUESTION_DETAILS", fetchQuestion);
   yield takeLatest("EDIT_QUESTION_REQUEST", editQuestion);
   yield takeLatest("FETCH_ALL_QUESTIONS_REQUEST", fetchAllQuestions);
+  yield takeLatest("FETCH_USER_QUESTIONS_REQUEST", fetchUserQuestions);
 }
 
 export default watchQuestionSaga;
