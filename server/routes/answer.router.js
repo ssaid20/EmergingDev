@@ -23,5 +23,26 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+// to get all answers to that question
+router.get('/:id', (req, res) => {
+    const question_id = req.params.id;
+    console.log("Request Params:", req.params);
+
+  
+    const queryText = `
+      SELECT * FROM "answers"
+      WHERE "question_id" = $1;
+    `;
+  
+    pool.query(queryText, [question_id])
+      .then((result) => {
+        res.send(result.rows);
+      })
+      .catch((err) => {
+        console.log('Error fetching answers:', err);
+        res.sendStatus(500);
+      });
+  });
+  
 
 module.exports = router;

@@ -4,8 +4,9 @@ import { useParams } from "react-router-dom";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "../../lib/utils";
 import RenderTag from "../shared/RenderTag";
-import ParseHTML from '../shared/ParseHTML';
+import ParseHTML from "../shared/ParseHTML";
 import Answer from "../Forms/Answer";
+import AllAnswers from "../shared/AllAnswer";
 
 export default function QuestionDetails() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export default function QuestionDetails() {
   const user = useSelector((store) => store.user);
   const question = useSelector((store) => store.question.allQuestions);
   const isUserAuthor = user.id === question.author_id;
+  const answers = useSelector((store) => store.answer.allanswers);
 
   if (!questionDetails) {
     return <div>Loading...</div>;
@@ -30,9 +32,12 @@ export default function QuestionDetails() {
     <>
       <div className="flex-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
-          <a href={isUserAuthor ? `/user` : `/user/${questionDetails.author_id}`} className="flex items-center justify-start gap-1">
-            <img 
-              src={user.profilePicture} 
+          <a
+            href={isUserAuthor ? `/user` : `/user/${questionDetails.author_id}`}
+            className="flex items-center justify-start gap-1"
+          >
+            <img
+              src={user.profilePicture}
               className="rounded-full"
               width={22}
               height={22}
@@ -53,21 +58,21 @@ export default function QuestionDetails() {
       </div>
 
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
-        <Metric 
+        <Metric
           imgUrl="/assets/icons/clock.svg"
           alt="clock icon"
           value={` asked ${getTimestamp(questionDetails.created_at)}`}
           title=" Asked"
           textStyles="small-medium text-dark400_light800"
         />
-        <Metric 
+        <Metric
           imgUrl="/assets/icons/message.svg"
           alt="message"
           value={formatAndDivideNumber(questionDetails.answers.length)} // Assuming answers is an array
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />
-        <Metric 
+        <Metric
           imgUrl="/assets/icons/eye.svg"
           alt="eye"
           value={formatAndDivideNumber(questionDetails.views)}
@@ -76,8 +81,7 @@ export default function QuestionDetails() {
         />
       </div>
 
-      <ParseHTML data={questionDetails.content} /> 
-
+      <ParseHTML data={questionDetails.content} />
 
       {/* <div className="mt-8 flex flex-wrap gap-2">
         {questionDetails.tags.map((tag) => (
@@ -90,6 +94,10 @@ export default function QuestionDetails() {
         ))}
       </div> */}
 
+      <AllAnswers
+        auther_id={user.id}
+        totalAnswers={answers.length} // Derived from the Redux store
+      />
 
       <Answer />
     </>
