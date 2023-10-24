@@ -42,6 +42,48 @@ router.get('/:id', (req, res) => {
         res.sendStatus(500);
       });
   });
-  
+
+
+// Route to edit a specific answer by ID
+router.put("/:id", rejectUnauthenticated, (req, res) => {
+  const { content } = req.body; // Destructure the updated content from the request body
+  const answerId = req.params.id;
+
+  // SQL query to update the answer details
+  const updateAnswerQuery = `
+    UPDATE "answers"
+    SET "content" = $1
+    WHERE "id" = $2;
+  `;
+
+  // Execute the query
+  pool
+    .query(updateAnswerQuery, [content, answerId])
+    .then(() => res.sendStatus(200))
+    .catch((err) => {
+      console.log("Error updating answer:", err);
+      res.sendStatus(500);
+    });
+});
+
+// Route to delete a specific answer by ID
+router.delete("/:id", rejectUnauthenticated, (req, res) => {
+  const answerId = req.params.id;
+
+  // SQL query to delete the answer
+  const deleteAnswerQuery = `
+    DELETE FROM "answers"
+    WHERE "id" = $1;
+  `;
+
+  // Execute the query
+  pool
+    .query(deleteAnswerQuery, [answerId])
+    .then(() => res.sendStatus(200))
+    .catch((err) => {
+      console.log("Error deleting answer:", err);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;
