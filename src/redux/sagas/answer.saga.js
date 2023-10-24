@@ -35,12 +35,34 @@ function* fetchUserAnswers(action) {
 }
 
 
+// Saga to edit a specific answer by ID
+function* editAnswer(action) {
+  try {
+    yield axios.put(`/api/answer/${action.payload.id}`, action.payload);
+    yield put({ type: "EDIT_ANSWER_SUCCESS" });
+  } catch (error) {
+    yield put({ type: "EDIT_ANSWER_FAILURE", error: error.message });
+  }
+}
+
+// Saga to delete a specific answer by ID
+function* deleteAnswer(action) {
+  try {
+    yield axios.delete(`/api/answer/${action.payload.id}`);
+    yield put({ type: "DELETE_ANSWER_SUCCESS" });
+  } catch (error) {
+    yield put({ type: "DELETE_ANSWER_FAILURE", error: error.message });
+  }
+}
+
 
 
 function* watchAnswerSaga() {
   yield takeLatest("POST_ANSWER_REQUEST", postAnswer);
   yield takeLatest("FETCH_ANSWERS_FOR_QUESTION", fetchAnswersForQuestion);
   yield takeLatest("FETCH_USER_ANSWERS_REQUEST", fetchUserAnswers);
+  yield takeLatest("EDIT_ANSWER_REQUEST", editAnswer);
+  yield takeLatest("DELETE_ANSWER_REQUEST", deleteAnswer);
 }
 
 export default watchAnswerSaga;

@@ -29,6 +29,14 @@ const answerReducer = (state = initialState, action) => {
             return { ...state, userAnswers: action.payload, isLoading: false };
         case "FETCH_USER_ANSWERS_FAILURE":
             return { ...state, isLoading: false, error: action.error };
+        case "EDIT_ANSWER_SUCCESS":
+            return { ...state, isSubmitting: false, postSuccess: true };
+        case "EDIT_ANSWER_FAILURE":
+            return { ...state, isSubmitting: false, postError: action.error };
+        case "DELETE_ANSWER_SUCCESS":
+            return { ...state, isSubmitting: false, postSuccess: true };
+        case "DELETE_ANSWER_FAILURE":
+            return { ...state, isSubmitting: false, postError: action.error };
         default:
             return state;
     }
