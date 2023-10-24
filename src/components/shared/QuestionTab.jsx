@@ -11,7 +11,7 @@ const QuestionTab = ({ userId }) => {
     dispatch({ type: "FETCH_USER_QUESTIONS_REQUEST", payload: { userId } });
   }, [dispatch, userId]);
  
-
+console.log("questionsDEFF", questions)
   return (
     <>
       {questions.map((question) => (
@@ -20,6 +20,7 @@ const QuestionTab = ({ userId }) => {
           id={question.id}
           title={question.title}
           tags={question.tags}
+          author_id={question.author_id}
           author={question.author}
           upvotes={question.upvotes}
           views={question.views}

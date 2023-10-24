@@ -14,6 +14,7 @@ import Home from "../Home/Home";
 import Profile from "../Profile/Profile";
 import Tags from "../Tags/Tags";
 import QuestionDetails from "../QuestionDetails/QuestionDetails";
+import QuestionEdit from "../shared/QuestionEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,7 +67,7 @@ function App() {
           <Route path="/tags" element={<ProtectedRoute element={<Tags />} />} />
           <Route path="/question/:id" element={<ProtectedRoute element={<QuestionDetails />} />} />
 
-
+          <Route path="/question/edit/:id" element={<QuestionEdit />} />
           <Route
             exact
             path="/login"

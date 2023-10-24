@@ -26,16 +26,20 @@ const questionReducer = (state = initialState, action) => {
       return { ...state, isSubmitting: false, postError: action.error };
     case "FETCH_QUESTION_SUCCESS":
       return { ...state, questionDetails: action.payload };
-    case "EDIT_QUESTION_SUCCESS":
-      return { ...state, postSuccess: true };
-    case "EDIT_QUESTION_FAILURE":
-      return { ...state, postError: action.error };
     case "FETCH_USER_QUESTIONS_REQUEST":
       return { ...state, isLoading: true, error: null };
     case "FETCH_USER_QUESTIONS_SUCCESS":
       return { ...state, userQuestions: action.payload, isLoading: false };
     case "FETCH_USER_QUESTIONS_FAILURE":
       return { ...state, isLoading: false, error: action.error };
+    case "EDIT_QUESTION_SUCCESS":
+      return { ...state, isSubmitting: false, postSuccess: true };
+    case "EDIT_QUESTION_FAILURE":
+      return { ...state, isSubmitting: false, postError: action.error };
+    case "DELETE_QUESTION_SUCCESS":
+      return { ...state, isSubmitting: false, postSuccess: true };
+    case "DELETE_QUESTION_FAILURE":
+      return { ...state, isSubmitting: false, postError: action.error };
     default:
       return state;
   }

@@ -6,30 +6,33 @@ import { formatAndDivideNumber, getTimestamp } from "../../lib/utils";
 import RenderTag from "../shared/RenderTag";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-
+import EditDeleteAction from "../shared/EditDeleteAction";
 const QuestionCard = ({
   title,
   id,
   tags,
   created_at,
   author_id,
+  author,
   upvotes,
   views,
   answers,
 }) => {
-  console.log('id: ',id)
+  console.log("id: ", id);
   const dispatch = useDispatch();
-   // Access question and user from the Redux store
+  // Access question and user from the Redux store
   const user = useSelector((store) => store.user);
+  console.log("username", user)
   const question = useSelector((store) => store.question.allQuestions);
-  const isUserAuthor = user.id === question.author_id;
-  console.log("User:", user.id);
+  console.log('author_id', author_id)
+  const isUserAuthor = user.id === author_id;
+  console.log("User:", isUserAuthor, user.id , author_id);
   // console.log("Author:", author_id);
 
   useEffect(() => {
     dispatch({ type: "FETCH_QUESTION_SUCCESS", payload: { id } });
   }, [id, dispatch]);
-  
+
   console.log("tags", tags);
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
@@ -44,8 +47,10 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-
-        {isUserAuthor && <div>{/* Add your edit/delete actions here */}</div>}
+        {isUserAuthor && <div>
+          <EditDeleteAction type="Question" itemId={id.toString()} />
+        </div>}
+        
       </div>
 
       <div className="mt-3.5 flex flex-wrap gap-2">
@@ -59,7 +64,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/avatar.svg"
           alt="user"
-          value={user.username}
+          value={author}
           title={` - asked ${getTimestamp(created_at)}`}
           href={isUserAuthor ? `/profile` : `/profile/${author_id}`}
           isAuthor

@@ -43,7 +43,7 @@ export default function Home() {
   useEffect(() => {
     dispatch({ type: "FETCH_ALL_QUESTIONS_REQUEST" });
   }, []);
-
+  console.log("questionsDEFF", questions)
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -78,11 +78,13 @@ export default function Home() {
               id={question.id}
               title={question.title}
               tags={question.tags}
+              author_id={question.author_id}
               author={question.author}
               upvotes={question.upvotes}
               views={question.views}
               answers={question.answers}
               created_at={question.created_at}
+
             />
           ))
           : <NoResult 
