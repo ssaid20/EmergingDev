@@ -23,6 +23,7 @@ const AnswersTab = ({ userId }) => {
           question_title={answer.question_title}
           content={answer.content}
           author={answer.author}
+          author_id={answer.author_id}
           upvotes={answer.upvotes}
           created_at={answer.created_at}
         />

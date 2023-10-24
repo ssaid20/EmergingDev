@@ -83,9 +83,16 @@ router.get('/answers/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     const queryText = `
-      SELECT answers.*, questions.title AS question_title 
-      FROM "answers" 
+      SELECT 
+        answers.id, 
+        answers.content, 
+        answers.created_at, 
+        answers.author_id,  
+        questions.title AS question_title, 
+        u.username AS author  
+      FROM "answers"
       JOIN questions ON answers.question_id = questions.id 
+      JOIN "user" AS u ON u.id = answers.author_id  
       WHERE answers."author_id" = $1
       ORDER BY answers."created_at" DESC;
     `;
@@ -97,6 +104,28 @@ router.get('/answers/:userId', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+
+
+// router.get('/answers/:userId', async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const queryText = `
+//       SELECT answers.*, questions.title AS question_title 
+//       FROM "answers" 
+//       JOIN questions ON answers.question_id = questions.id 
+//       WHERE answers."author_id" = $1
+//       ORDER BY answers."created_at" DESC;
+//     `;
+
+//     const result = await pool.query(queryText, [userId]);
+//     res.json(result.rows);
+//   } catch (error) {
+//     console.error('Error fetching answers for user:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 
 module.exports = router;

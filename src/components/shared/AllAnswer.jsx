@@ -5,7 +5,7 @@ import ParseHTML from "./ParseHTML";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const AllAnswers = ({ auther_id, totalAnswers }) => {
+const AllAnswers = ({ author_id, totalAnswers }) => {
   const dispatch = useDispatch();
   const answers = useSelector((store) => store.answer.allanswers);
   const { id } = useParams();

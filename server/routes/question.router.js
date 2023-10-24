@@ -51,6 +51,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 // Route to get details of a specific question by ID
 router.get("/:id", (req, res) => {
   const questionId = req.params.id;
+  console.log("Question ID:", questionId);
 
   // SQL query to fetch question details, tags, answers, and author's username
   const queryText = `
@@ -61,14 +62,15 @@ router.get("/:id", (req, res) => {
   questions.created_at, 
   ARRAY_AGG(DISTINCT tags.name) AS tags,
   ARRAY_AGG(DISTINCT answers.content) AS answers,
-  u.username AS author
+  u.username AS author,
+  u.id AS author_id
 FROM questions
 LEFT JOIN tag_questions ON tag_questions.question_id = questions.id
 LEFT JOIN tags ON tags.id = tag_questions.tag_id
 LEFT JOIN answers ON answers.question_id = questions.id
 JOIN "user" AS u ON u.id = questions.author_id
 WHERE questions.id = $1
-GROUP BY questions.id, u.username;`;
+GROUP BY questions.id, u.username, u.id;`;
 
   // Execute the query
   pool
@@ -82,8 +84,7 @@ GROUP BY questions.id, u.username;`;
     });
 });
 
-
-// Route to get all questions 
+// Route to get all questions
 ///TODO: Update it to access votes
 router.get("/", (req, res) => {
   const queryText = `
@@ -104,7 +105,6 @@ router.get("/", (req, res) => {
       res.sendStatus(500);
     });
 });
-
 
 // Route to edit a specific question by ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {

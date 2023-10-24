@@ -10,6 +10,8 @@ import AllAnswers from "../shared/AllAnswer";
 
 export default function QuestionDetails() {
   const { id } = useParams();
+  console.log("Params:", useParams());
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -95,7 +97,7 @@ export default function QuestionDetails() {
       </div> */}
 
       <AllAnswers
-        auther_id={user.id}
+        author_id={user.id}
         totalAnswers={answers.length} // Derived from the Redux store
       />
 

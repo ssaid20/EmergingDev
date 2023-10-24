@@ -9,8 +9,9 @@ const EditDeleteAction = ({ type, itemId }) => {
   const handleEdit = () => {
     if (type === 'Question') {
       navigate(`/question/edit/${itemId}`);
+    } else if(type === 'Answer'){
+      navigate(`/answer/edit/${itemId}`);
     }
-    // Add logic for editing answers 
   };
 
   const handleDelete = () => {
@@ -19,12 +20,13 @@ const EditDeleteAction = ({ type, itemId }) => {
       navigate("/user");
     } else if (type === 'Answer') {
       dispatch({ type: "DELETE_ANSWER_REQUEST", payload: { id: itemId } });
+      navigate("/user");
     }
   };
 
   return (
     <div className="flex items-center justify-end gap-3 max-sm:w-full">
-      {type === 'Question' && (
+      {(type === 'Question' || type === 'Answer') && ( // Added condition for Answer
         <img 
           src="/assets/icons/edit.svg"
           alt="Edit"
@@ -47,3 +49,4 @@ const EditDeleteAction = ({ type, itemId }) => {
 }
 
 export default EditDeleteAction;
+

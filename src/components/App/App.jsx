@@ -15,13 +15,13 @@ import Profile from "../Profile/Profile";
 import Tags from "../Tags/Tags";
 import QuestionDetails from "../QuestionDetails/QuestionDetails";
 import QuestionEdit from "../shared/QuestionEdit";
+import AnswerEdit from "../shared/AnswerEdit";
+import { useParams } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((store) => store.user);
-
   useEffect(() => {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
@@ -66,8 +66,10 @@ function App() {
           />
           <Route path="/tags" element={<ProtectedRoute element={<Tags />} />} />
           <Route path="/question/:id" element={<ProtectedRoute element={<QuestionDetails />} />} />
+          <Route path="/question/edit/:id" element={<ProtectedRoute element={<QuestionEdit />} />} />
 
-          <Route path="/question/edit/:id" element={<QuestionEdit />} />
+          <Route path="/answer/edit/:id" element={<AnswerEdit />} />
+          {/* <Route path="/question/edit/:id" element={<AnswerEdit />} /> */}
           <Route
             exact
             path="/login"
