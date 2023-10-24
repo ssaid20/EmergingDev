@@ -55,10 +55,18 @@ router.get('/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     const queryText = `
-      SELECT * FROM "questions" 
-      WHERE "author_id" = $1
-      ORDER BY "created_at" DESC;
-    `; // Assuming you have a "questions" table and "author_id" column
+      SELECT 
+        questions.id, 
+        questions.title, 
+        questions.content, 
+        questions.created_at, 
+        questions.author_id,
+        u.username AS author
+      FROM "questions"
+      JOIN "user" AS u ON u.id = questions.author_id
+      WHERE questions.author_id = $1
+      ORDER BY questions.created_at DESC;
+    `;
 
     const result = await pool.query(queryText, [userId]);
     res.json(result.rows);
@@ -67,6 +75,7 @@ router.get('/:userId', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 
 // Route to get answers for a specific user

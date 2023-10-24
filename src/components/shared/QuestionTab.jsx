@@ -5,7 +5,7 @@ import QuestionCard from "../Cards/QuestionCard";
 const QuestionTab = ({ userId }) => {
   const dispatch = useDispatch();
   const questions = useSelector((store) => store.question.userQuestions);
-
+ console.log("Q", questions)
   useEffect(() => {
     // Dispatch an action to fetch the user's questions
     dispatch({ type: "FETCH_USER_QUESTIONS_REQUEST", payload: { userId } });

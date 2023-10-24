@@ -28,11 +28,11 @@ const QuestionCard = ({
   const isUserAuthor = user.id === author_id;
   console.log("User:", isUserAuthor, user.id , author_id);
   // console.log("Author:", author_id);
-
+const store = useSelector((store)=> store)
   useEffect(() => {
-    dispatch({ type: "FETCH_QUESTION_SUCCESS", payload: { id } });
+    dispatch({ type: "FETCH_QUESTION_DETAILS", payload: { id } });
   }, [id, dispatch]);
-
+console.log("store", store)
   console.log("tags", tags);
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">

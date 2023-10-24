@@ -82,9 +82,29 @@ GROUP BY questions.id, u.username;`;
     });
 });
 
-// Route to get all questions
+// // Route to get all questions
+// router.get("/", (req, res) => {
+//   const queryText = `SELECT * FROM "questions";`;
+//   pool
+//     .query(queryText)
+//     .then((result) => res.send(result.rows))
+//     .catch((err) => {
+//       console.log("error on router get all questions", err);
+//       res.sendStatus(500);
+//     });
+// });
+
 router.get("/", (req, res) => {
-  const queryText = `SELECT * FROM "questions";`;
+  const queryText = `
+    SELECT 
+      questions.id, 
+      questions.title, 
+      questions.content, 
+      questions.created_at, 
+      u.username AS author
+    FROM questions
+    JOIN "user" AS u ON u.id = questions.author_id;`;
+
   pool
     .query(queryText)
     .then((result) => res.send(result.rows))
@@ -93,6 +113,7 @@ router.get("/", (req, res) => {
       res.sendStatus(500);
     });
 });
+
 
 // Route to edit a specific question by ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
