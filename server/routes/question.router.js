@@ -82,18 +82,9 @@ GROUP BY questions.id, u.username;`;
     });
 });
 
-// // Route to get all questions
-// router.get("/", (req, res) => {
-//   const queryText = `SELECT * FROM "questions";`;
-//   pool
-//     .query(queryText)
-//     .then((result) => res.send(result.rows))
-//     .catch((err) => {
-//       console.log("error on router get all questions", err);
-//       res.sendStatus(500);
-//     });
-// });
 
+// Route to get all questions 
+///TODO: Update it to access votes
 router.get("/", (req, res) => {
   const queryText = `
     SELECT 
