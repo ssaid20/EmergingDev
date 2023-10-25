@@ -7,6 +7,13 @@ const initialState = {
   userQuestions: [],
   isLoading: false,
   error: null,
+  votes: {
+    upvotes: 0,
+    downvotes: 0,
+    hasupVoted: false,
+    hasdownVoted: false,
+    hassaved: false,
+  },
 };
 
 const questionReducer = (state = initialState, action) => {
@@ -40,6 +47,23 @@ const questionReducer = (state = initialState, action) => {
       return { ...state, isSubmitting: false, postSuccess: true };
     case "DELETE_QUESTION_FAILURE":
       return { ...state, isSubmitting: false, postError: action.error };
+    case "VOTE_QUESTION_SUCCESS":
+      return {
+        ...state,
+        votes: {
+          ...state.votes,
+          hasupVoted: action.payload,
+          hasdownVoted: action.payload.hasdownVoted,
+        },
+      };
+    case "TOGGLE_SAVE_QUESTION_SUCCESS":
+      return {
+        ...state,
+        votes: {
+          ...state.votes,
+          hassaved: action.payload.hassaved,
+        },
+      };
     default:
       return state;
   }

@@ -79,6 +79,26 @@ function* deleteQuestion(action) {
   }
 }
 
+
+function* voteQuestion(action) {
+  try {
+    const response = yield axios.post(`/api/votes/${action.payload.questionId}`, action.payload);
+    yield put({ type: "VOTE_QUESTION_SUCCESS", payload: response.data });
+  } catch (error) {
+    yield put({ type: "VOTE_QUESTION_FAILURE", error: error.message });
+  }
+}
+
+function* toggleSaveQuestion(action) {
+  try {
+    const response = yield axios.post(`/api/collection/${action.payload.questionId}`, action.payload);
+    yield put({ type: "TOGGLE_SAVE_QUESTION_SUCCESS", payload: response.data });
+  } catch (error) {
+    yield put({ type: "TOGGLE_SAVE_QUESTION_FAILURE", error: error.message });
+  }
+}
+
+
 // Watcher saga to listen for dispatched actions and delegate to appropriate worker sagas
 function* watchQuestionSaga() {
   yield takeLatest("POST_QUESTION_REQUEST", postQuestion);
@@ -87,6 +107,8 @@ function* watchQuestionSaga() {
   yield takeLatest("FETCH_USER_QUESTIONS_REQUEST", fetchUserQuestions);
   yield takeLatest("EDIT_QUESTION_REQUEST", editQuestion);
   yield takeLatest("DELETE_QUESTION_REQUEST", deleteQuestion);
+  yield takeLatest("VOTE_QUESTION", voteQuestion);
+  yield takeLatest("TOGGLE_SAVE_QUESTION", toggleSaveQuestion);
 }
 
 export default watchQuestionSaga;

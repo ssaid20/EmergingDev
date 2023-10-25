@@ -57,3 +57,45 @@ export const formatAndDivideNumber = (num) => {
     return `${num}`;
   }
 };
+
+export const formUrlQuery = ({ params, key, value }) => {
+  const currentUrl = qs.parse(params);
+  currentUrl[key] = value;
+  return qs.stringifyUrl({
+    url: window.location.pathname,
+    query: currentUrl,
+  }, { skipNull: true });
+}
+
+export const removeKeysFromQuery = ({ params, keysToRemove }) => {
+  const currentUrl = qs.parse(params);
+  keysToRemove.forEach((key) => {
+    delete currentUrl[key];
+  });
+  return qs.stringifyUrl({
+    url: window.location.pathname,
+    query: currentUrl,
+  }, { skipNull: true });
+}
+
+export const assignBadges = (params) => {
+  const badgeCounts = {
+    GOLD: 0,
+    SILVER: 0,
+    BRONZE: 0,
+  };
+  const criteria = params.criteria;
+  criteria.forEach((item) => {
+    const type = item.type;
+    const count = item.count;
+    const badgeLevels = BADGE_CRITERIA[type];
+    Object.keys(badgeLevels).forEach((level) => {
+      if (count >= badgeLevels[level]) {
+        badgeCounts[level] += 1;
+      }
+    });
+  });
+  return badgeCounts;
+}
+
+

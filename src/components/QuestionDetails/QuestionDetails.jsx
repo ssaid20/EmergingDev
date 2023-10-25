@@ -7,6 +7,7 @@ import RenderTag from "../shared/RenderTag";
 import ParseHTML from "../shared/ParseHTML";
 import Answer from "../Forms/Answer";
 import AllAnswers from "../shared/AllAnswer";
+import Votes from "../shared/Votes";
 
 export default function QuestionDetails() {
   const { id } = useParams();
@@ -51,7 +52,17 @@ export default function QuestionDetails() {
           </a>
           <div className="flex justify-end">
             {/* Placeholder for VOTING */}
-            VOTING
+
+            <Votes
+              type="Question"
+              itemId={id}
+              userId={user.id}
+              upvotes={questionDetails.upvotes}
+              hasupVoted={questionDetails.hasupVoted}
+              downvotes={questionDetails.downvotes}
+              hasdownVoted={questionDetails.hasdownVoted}
+              hassaved={questionDetails.hassaved}
+            />
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">

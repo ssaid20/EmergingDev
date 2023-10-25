@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 function Profile() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-
+console.log("userBA", user)
   // Assuming you have an action to fetch user info
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
