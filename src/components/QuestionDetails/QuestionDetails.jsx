@@ -58,9 +58,7 @@ export default function QuestionDetails() {
               itemId={id}
               userId={user.id}
               upvotes={questionDetails.upvotes}
-              hasupVoted={questionDetails.hasupVoted}
               downvotes={questionDetails.downvotes}
-              hasdownVoted={questionDetails.hasdownVoted}
               hassaved={questionDetails.hassaved}
             />
           </div>

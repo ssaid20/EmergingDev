@@ -64,6 +64,8 @@ const questionReducer = (state = initialState, action) => {
           hassaved: action.payload.hassaved,
         },
       };
+    case "FETCH_SAVED_QUESTIONS_SUCCESS":
+      return { ...state, userSavedQuestions: action.payload };
     default:
       return state;
   }

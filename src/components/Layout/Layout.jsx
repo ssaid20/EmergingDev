@@ -28,13 +28,10 @@ const Layout = ({ children }) => {
                   {children}
                 </div>
               </section>
-
-              {/* RightSidebar */}
             </div>
 
             {/* <Toaster /> */}
           </main>
-          <LogOutButton className="navLink" />
         </>
       )}
     </>

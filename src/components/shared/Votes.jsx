@@ -7,24 +7,24 @@ const Votes = ({
   itemId,
   userId,
   upvotes,
-  hasupVoted,
   downvotes,
-  hasdownVoted,
   hassaved,
 }) => {
+  console.log("Rendering Votes component with props:", {
 
-    console.log("Rendering Votes component with props:", {
-        hasupVoted,
-        hasdownVoted,
-        upvotes,
-        downvotes,
-        hassaved
-      });
+    upvotes,
+    downvotes,
+    hassaved,
+  });
   const dispatch = useDispatch();
   const questionDetails = useSelector(
     (store) => store.question.questionDetails[0]
   );
-  
+
+  const hasUpvotedFromDetails = questionDetails.hasupvoted;
+  const hasDownvotedFromDetails = questionDetails.hasdownvoted;
+
+  console.log("questionDetails", questionDetails);
   const handleSave = () => {
     dispatch({
       type: "TOGGLE_SAVE_QUESTION",
@@ -36,7 +36,10 @@ const Votes = ({
     if (!userId) {
       return;
     }
-    if ((action === 'upvote' && hasdownVoted) || (action === 'downvote' && hasupVoted)) {
+    if (
+      (action === "upvote" && hasDownvotedFromDetails ) ||
+      (action === "downvote" && hasUpvotedFromDetails)
+    ) {
       alert("You've already voted in the opposite direction.");
       return;
     }
@@ -46,26 +49,27 @@ const Votes = ({
         questionId: JSON.parse(itemId),
         userId: JSON.parse(userId),
         action,
-        hasupVoted,
-        hasdownVoted,
+        // hasupVoted,
+        // hasdownVoted,
       },
     });
   };
-  console.log("hasupVoted", hasupVoted)
+
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
         <div className="flex-center gap-1.5">
-          <img 
-            src={hasupVoted
-              ? '/assets/icons/upvoted.svg'
-              : '/assets/icons/upvote.svg'
+          <img
+            src={
+              hasUpvotedFromDetails
+                ? "/assets/icons/upvoted.svg"
+                : "/assets/icons/upvote.svg"
             }
             width={18}
             height={18}
             alt="upvote"
             className="cursor-pointer"
-            onClick={() => handleVote('upvote')}
+            onClick={() => handleVote("upvote")}
           />
 
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
@@ -76,16 +80,17 @@ const Votes = ({
         </div>
 
         <div className="flex-center gap-1.5">
-          <img 
-            src={hasdownVoted
-              ? '/assets/icons/downvoted.svg'
-              : '/assets/icons/downvote.svg'
+          <img
+            src={
+              hasDownvotedFromDetails
+                ? "/assets/icons/downvoted.svg"
+                : "/assets/icons/downvote.svg"
             }
             width={18}
             height={18}
             alt="downvote"
             className="cursor-pointer"
-            onClick={() => handleVote('downvote')}
+            onClick={() => handleVote("downvote")}
           />
 
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
@@ -96,11 +101,12 @@ const Votes = ({
         </div>
       </div>
 
-      {type === 'Question' && (
-        <img 
-          src={hassaved
-            ? '/assets/icons/star-filled.svg'
-            : '/assets/icons/star-red.svg'
+      {type === "Question" && (
+        <img
+          src={
+            hassaved
+              ? "/assets/icons/star-filled.svg"
+              : "/assets/icons/star-red.svg"
           }
           width={18}
           height={18}
@@ -110,11 +116,7 @@ const Votes = ({
         />
       )}
     </div>
-  )
+  );
 };
 
 export default Votes;
-
-
-
-

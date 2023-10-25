@@ -99,6 +99,21 @@ function* toggleSaveQuestion(action) {
 }
 
 
+function* fetchSavedQuestions() {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    };
+    const response = yield axios.get("/api/collection/saved", config);
+    yield put({ type: "FETCH_SAVED_QUESTIONS_SUCCESS", payload: response.data });
+  } catch (error) {
+    yield put({ type: "FETCH_SAVED_QUESTIONS_FAILURE", error: error.message });
+  }
+}
+
+
+
 // Watcher saga to listen for dispatched actions and delegate to appropriate worker sagas
 function* watchQuestionSaga() {
   yield takeLatest("POST_QUESTION_REQUEST", postQuestion);
@@ -109,6 +124,7 @@ function* watchQuestionSaga() {
   yield takeLatest("DELETE_QUESTION_REQUEST", deleteQuestion);
   yield takeLatest("VOTE_QUESTION", voteQuestion);
   yield takeLatest("TOGGLE_SAVE_QUESTION", toggleSaveQuestion);
+  yield takeLatest("FETCH_SAVED_QUESTIONS_REQUEST", fetchSavedQuestions);
 }
 
 export default watchQuestionSaga;
