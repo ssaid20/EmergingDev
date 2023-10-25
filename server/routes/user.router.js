@@ -128,4 +128,37 @@ router.get('/answers/:userId', async (req, res) => {
 // });
 
 
+// Handles PUT request to update user profile
+router.put('/', rejectUnauthenticated, async (req, res) => {
+  try {
+      const userId = req.user.id; 
+      console.log("User ID:", userId);
+
+      const { name, username, githubLink, bio } = req.body;
+
+      const queryText = `
+          UPDATE "user"
+          SET 
+              name = $1,
+              username = $2,
+              githubLink = $3,
+              bio = $4
+          WHERE id = $5
+          RETURNING *;
+      `;
+
+      const result = await pool.query(queryText, [name, username, githubLink, bio, userId]);
+
+      if (result.rowCount === 0) {
+          res.status(404).send('User not found');
+      } else {
+          res.json(result.rows[0]);
+      }
+  } catch (error) {
+      console.error('Error updating user profile:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = router;
+
