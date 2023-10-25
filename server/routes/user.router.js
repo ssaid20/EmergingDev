@@ -9,10 +9,36 @@ const userStrategy = require('../strategies/user.strategy');
 const router = express.Router();
 
 // Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
-  // Send back user object from the session (previously queried from the database)
-  res.send(req.user);
+// Handles Ajax request for user information if user is authenticated
+router.get('/', rejectUnauthenticated, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Fetch total questions
+    const totalQuestionsResult = await pool.query(`SELECT COUNT(*) as total FROM "questions" WHERE "author_id" = $1`, [userId]);
+    const totalQuestions = totalQuestionsResult.rows[0].total;
+
+    // Fetch total answers
+    const totalAnswersResult = await pool.query(`SELECT COUNT(*) as total FROM "answers" WHERE "author_id" = $1`, [userId]);
+    const totalAnswers = totalAnswersResult.rows[0].total;
+
+    // Send back user object from the session with additional data
+    res.send({
+      ...req.user,
+      totalQuestions,
+      totalAnswers
+    });
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
+
+// router.get('/', rejectUnauthenticated, (req, res) => {
+//   // Send back user object from the session (previously queried from the database)
+//   res.send(req.user);
+// });
 
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
@@ -104,28 +130,6 @@ router.get('/answers/:userId', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-
-
-
-// router.get('/answers/:userId', async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
-//     const queryText = `
-//       SELECT answers.*, questions.title AS question_title 
-//       FROM "answers" 
-//       JOIN questions ON answers.question_id = questions.id 
-//       WHERE answers."author_id" = $1
-//       ORDER BY answers."created_at" DESC;
-//     `;
-
-//     const result = await pool.query(queryText, [userId]);
-//     res.json(result.rows);
-//   } catch (error) {
-//     console.error('Error fetching answers for user:', error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
 
 
 // Handles PUT request to update user profile
