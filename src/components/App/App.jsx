@@ -17,6 +17,7 @@ import QuestionEdit from "../shared/QuestionEdit";
 import AnswerEdit from "../shared/AnswerEdit";
 import { useParams } from "react-router-dom";
 import ProfileEdit from "../Forms/ProfileEdit";
+import TagDetails from "../TagDetails.jsx/TagDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -64,8 +65,8 @@ function App() {
           <Route path="/question/:id" element={<ProtectedRoute element={<QuestionDetails />} />} />
           <Route path="/question/edit/:id" element={<ProtectedRoute element={<QuestionEdit />} />} />
           <Route path="/user/edit/" element={<ProtectedRoute element={<ProfileEdit />} />} />
-          <Route path="/answer/edit/:id" element={<AnswerEdit />} />
-          {/* <Route path="/question/edit/:id" element={<AnswerEdit />} /> */}
+          <Route path="/answer/edit/:id" element={<ProtectedRoute element={<AnswerEdit />}/>} />
+          <Route path="/tags/:tagId" element={<ProtectedRoute element={<TagDetails />} />} />
           <Route
             exact
             path="/login"
