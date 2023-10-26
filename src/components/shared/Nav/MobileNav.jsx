@@ -17,7 +17,7 @@ const NavContent = () => {
         return (
           <SheetClose asChild key={item.route}>
             <Link
-              href={item.route}
+              to={item.route}
               className={`${
                 isActive
                   ? "primary-gradient rounded-lg text-light-900"
