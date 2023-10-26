@@ -187,21 +187,61 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
   const questionId = req.params.id;
 
+  // SQL query to delete references in user_saved_questions
+  const deleteUserSavedQuestionQuery = `
+    DELETE FROM "user_saved_questions"
+    WHERE "question_id" = $1;
+  `;
+
+  // SQL query to delete upvotes references in question_upvotes
+  const deleteQuestionUpvotesQuery = `
+    DELETE FROM "question_upvotes"
+    WHERE "question_id" = $1;
+  `;
+
   // SQL query to delete the question
   const deleteQuestionQuery = `
     DELETE FROM "questions"
     WHERE "id" = $1;
   `;
 
-  // Execute the query
+  // First, delete references in user_saved_questions
   pool
-    .query(deleteQuestionQuery, [questionId])
+    .query(deleteUserSavedQuestionQuery, [questionId])
+    .then(() => {
+      // Then, delete upvotes references in question_upvotes
+      return pool.query(deleteQuestionUpvotesQuery, [questionId]);
+    })
+    .then(() => {
+      // Finally, delete the question
+      return pool.query(deleteQuestionQuery, [questionId]);
+    })
     .then(() => res.sendStatus(200))
     .catch((err) => {
       console.log("Error deleting question:", err);
       res.sendStatus(500);
     });
 });
+
+
+// router.delete("/:id", rejectUnauthenticated, (req, res) => {
+//   const questionId = req.params.id;
+
+//   // SQL query to delete the question
+//   const deleteQuestionQuery = `
+//     DELETE FROM "questions"
+//     WHERE "id" = $1;
+//   `;
+
+//   // Execute the query
+//   pool
+//     .query(deleteQuestionQuery, [questionId])
+//     .then(() => res.sendStatus(200))
+//     .catch((err) => {
+//       console.log("Error deleting question:", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 
 // Route to handle voting on a question

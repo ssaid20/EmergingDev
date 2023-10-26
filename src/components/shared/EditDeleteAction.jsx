@@ -18,7 +18,6 @@ const EditDeleteAction = ({ type, itemId }) => {
   const handleDelete = () => {
     if (type === 'Question') {
       dispatch({ type: "DELETE_QUESTION_REQUEST", payload: { id: itemId } });
-      navigate("/user");
        // Display the toast after deleting the question
        toast({
         title: "Question deleted successfully",
