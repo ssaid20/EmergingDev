@@ -4,6 +4,7 @@ import LeftSidebar from '../shared/LeftSidebar';
 import Nav from '../shared/Nav/Nav';
 import LogOutButton from '../LogOutButton/LogOutButton'; 
 import LoginPage from '../LoginPage/LoginPage';
+import { Toaster } from '../ui/toaster';
 
 const Layout = ({ children }) => {
   const user = useSelector((store) => store.user);
@@ -31,6 +32,7 @@ const Layout = ({ children }) => {
             </div>
 
             {/* <Toaster /> */}
+            <Toaster />
           </main>
         </>
       )}

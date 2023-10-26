@@ -19,10 +19,12 @@ import { Badge } from "../ui/badge";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "src/context/ThemeProvider";
+import { useToast } from "../ui/use-toast"
 
 const type = "create";
 
 const Question = () => {
+  const { toast } = useToast()
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -225,6 +227,12 @@ const Question = () => {
             type="submit"
             className="primary-gradient w-fit !text-light-900"
             disabled={store.isSubmitting}
+            onClick={() => {
+              toast({
+                title: "Question posted successfully!",
+                description: "Your question has been posted successfully!",
+              })
+            }}
           >
             {isSubmitting ? (
               <>{type === "edit" ? "Editing..." : "Posting..."}</>
@@ -240,4 +248,3 @@ const Question = () => {
 
 export default Question;
 
-// Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Donec in efficitur leo. In hac habitasse platea dictumst. Sed ullamcorper nunc et odio pellentesque, quis.

@@ -18,13 +18,14 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { useToast } from "../ui/use-toast";
 
 const type = "create";
 function QuestionEdit() {
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const { id } = useParams(); // Get the question ID from the URL if it exists
-
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -275,6 +276,12 @@ console.log("title",title)
             type="submit"
             className="primary-gradient w-fit !text-light-900"
             disabled={store.isSubmitting}
+            onClick={() => {
+              toast({
+                title: "Question posted successfully",
+                description: "Your question has been posted successfully",
+              })
+            }}
           >
             {isSubmitting ? (
               <>{type === "edit" ? "Editing..." : "Posting..."}</>

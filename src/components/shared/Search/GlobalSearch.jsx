@@ -1,9 +1,25 @@
 import React from 'react'
 import { Input } from "../../ui/input"
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const GlobalSearch = () => {
   const [search, setSearch] = useState('');
+  console.log("search", search)
+
+  useEffect(() => {
+    if (search) {
+      axios.get(`/api/questions/search?q=${search}`)
+        .then((response) => {
+          // Handle the search results
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching search results:", error);
+        });
+    }
+  }, [search]);
+
   return (
     <div className="relative w-full max-w-[600px] max-lg:hidden">
       <div className="background-light800_darkgradient relative flex min-h-[56px] grow items-center gap-1 rounded-xl px-4">

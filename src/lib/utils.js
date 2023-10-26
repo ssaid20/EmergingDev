@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import qs from 'qs';
+
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -61,22 +63,20 @@ export const formatAndDivideNumber = (num) => {
 export const formUrlQuery = ({ params, key, value }) => {
   const currentUrl = qs.parse(params);
   currentUrl[key] = value;
-  return qs.stringifyUrl({
-    url: window.location.pathname,
-    query: currentUrl,
-  }, { skipNull: true });
+  const queryString = qs.stringify(currentUrl, { skipNull: true });
+  return `${window.location.pathname}?${queryString}`;
 }
+
 
 export const removeKeysFromQuery = ({ params, keysToRemove }) => {
   const currentUrl = qs.parse(params);
   keysToRemove.forEach((key) => {
     delete currentUrl[key];
   });
-  return qs.stringifyUrl({
-    url: window.location.pathname,
-    query: currentUrl,
-  }, { skipNull: true });
+  const queryString = qs.stringify(currentUrl, { skipNull: true });
+  return `${window.location.pathname}?${queryString}`;
 }
+
 
 export const assignBadges = (params) => {
   const badgeCounts = {

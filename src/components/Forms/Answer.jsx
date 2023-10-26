@@ -16,6 +16,7 @@ import { AnswerSchema } from "../../lib/validations";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "src/context/ThemeProvider";
+import { useToast } from "../ui/use-toast"
 
 
 
@@ -26,6 +27,7 @@ const Answer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
   // Get the state from the Redux store
   const store = useSelector((store) => store.answer);
 
@@ -57,20 +59,6 @@ const Answer = () => {
         <h4 className="paragraph-semibold text-dark400_light800">
           Write your answer here
         </h4>
-
-        {/* <Button
-          className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
-          onClick={() => {}}
-        >
-          <img
-            src="/assets/icons/stars.svg"
-            alt="star"
-            width={12}
-            height={12}
-            className="object-contain"
-          />
-          Generate an AI Answer
-        </Button> */}
       </div>
 
       <Form {...form}>
@@ -133,6 +121,12 @@ const Answer = () => {
               type="submit"
               className="primary-gradient w-fit text-white"
               disabled={store.isSubmitting}
+              onClick={() => {
+                toast({
+                  title: "Answer submitted successfully",
+                  description: "Your answer has been submitted successfully",
+                })
+              }}
             >
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>

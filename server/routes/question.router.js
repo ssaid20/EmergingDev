@@ -270,5 +270,24 @@ router.post("/:id/save", rejectUnauthenticated, (req, res) => {
 });
 
 
+router.get("/search", (req, res) => {
+  const searchTerm = req.query.q;
+
+  // SQL query to search for the term in the database
+  const searchQuery = `
+      SELECT * FROM "questions"
+      WHERE "title" ILIKE $1 OR "content" ILIKE $1;
+  `;
+
+  pool
+      .query(searchQuery, [`%${searchTerm}%`])
+      .then((result) => res.send(result.rows))
+      .catch((err) => {
+          console.log("Error searching questions:", err);
+          res.sendStatus(500);
+      });
+});
+
+
 module.exports = router;
 

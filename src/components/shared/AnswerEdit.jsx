@@ -16,12 +16,13 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 function AnswerEdit() {
   const editorRef = useRef(null);
   const { mode } = useTheme();
   const { id } = useParams();
-
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -137,6 +138,12 @@ function AnswerEdit() {
             type="submit"
             className="primary-gradient w-fit !text-light-900"
             disabled={store.isSubmitting}
+            onClick={() => {
+              toast({
+                title: "Answer edited successfully",
+                description: "Your answer has been edited successfully",
+              })
+            }}
           >
             {isSubmitting ? "Editing..." : "Edit Answer"}
           </Button>

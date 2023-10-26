@@ -15,10 +15,14 @@ import {
   import { Button } from "../ui/button";
   import { Textarea } from "../ui/textarea"
   import { useNavigate } from "react-router-dom";
+import { useToast } from "../ui/use-toast"
+
 const ProfileEdit = () => {
-  const user = useSelector((store) => store.user); // Adjust the selector accordingly
-  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user); // Get the user from the store
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
+  const { toast } = useToast();
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
@@ -122,6 +126,12 @@ const ProfileEdit = () => {
         <div className="mt-7 flex justify-end">
           <Button type="submit" className="primary-gradient w-fit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
+            onClick={() => {
+              toast({
+                title: "Profile updated successfully",
+                description: "Your profile has been updated successfully",
+              })
+            }}
           </Button>
         </div>
       </form>

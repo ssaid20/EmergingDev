@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { formatAndDivideNumber } from "../../lib/utils";
-
+import { useToast } from "../ui/use-toast";
 const Votes = ({
   type,
   itemId,
@@ -16,6 +16,7 @@ const Votes = ({
     downvotes,
     hassaved,
   });
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const questionDetails = useSelector(
     (store) => store.question.questionDetails[0]
@@ -29,6 +30,10 @@ const Votes = ({
     dispatch({
       type: "TOGGLE_SAVE_QUESTION",
       payload: { userId, questionId: itemId },
+    });
+    toast({
+      title: "Question saved",
+      description: "You've saved the question.",
     });
   };
 
@@ -52,6 +57,10 @@ const Votes = ({
         // hasupVoted,
         // hasdownVoted,
       },
+    });
+    toast({
+      title: "Vote registered",
+      description: `You've ${action}d the question.`,
     });
   };
 
