@@ -11,7 +11,7 @@ const Collection = () => {
   const savedQuestions = useSelector(
     (store) => store.question.userSavedQuestions
   );
-
+console.log("savedQuestions", savedQuestions);
   useEffect(() => {
     dispatch({ type: "FETCH_SAVED_QUESTIONS_REQUEST" });
   }, []);
@@ -34,7 +34,7 @@ const Collection = () => {
               author={question.author}
               upvotes={question.upvotes}
               views={question.views}
-              answers={question.answers}
+              answers={question.total_answers}
               created_at={question.created_at}
             />
           ))

@@ -25,20 +25,23 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 // to get all answers to that question
 router.get('/:id', (req, res) => {
   const question_id = req.params.id;
-  console.log("Request Params:", req.params);
-
+//updated query to include upvotes, downvotes, and author
   const queryText = `
     SELECT 
       answers.id, 
       answers.content, 
       answers.created_at, 
-      u.username AS author
+      answers.upvotes,
+      answers.downvotes,
+      u.username AS author,
+      CASE WHEN usq.question_id IS NOT NULL THEN TRUE ELSE FALSE END AS hassaved
     FROM "answers"
     JOIN "user" AS u ON u.id = answers.author_id
+    LEFT JOIN "user_saved_questions" AS usq ON usq.question_id = answers.question_id AND usq.user_id = $2
     WHERE answers.question_id = $1;
   `;
 
-  pool.query(queryText, [question_id])
+  pool.query(queryText, [question_id, req.user.id]) 
     .then((result) => {
       res.send(result.rows);
     })
@@ -50,25 +53,33 @@ router.get('/:id', (req, res) => {
 
 
 
-// router.get('/:id', (req, res) => {
-//     const question_id = req.params.id;
-//     console.log("Request Params:", req.params);
 
-  
-//     const queryText = `
-//       SELECT * FROM "answers"
-//       WHERE "question_id" = $1;
-//     `;
-  
-//     pool.query(queryText, [question_id])
-//       .then((result) => {
-//         res.send(result.rows);
-//       })
-//       .catch((err) => {
-//         console.log('Error fetching answers:', err);
-//         res.sendStatus(500);
-//       });
-//   });
+// router.get('/:id', (req, res) => {
+//   const question_id = req.params.id;
+//   console.log("Request Params:", req.params);
+
+//   const queryText = `
+//     SELECT 
+//       answers.id, 
+//       answers.content, 
+//       answers.created_at, 
+//       u.username AS author
+//     FROM "answers"
+//     JOIN "user" AS u ON u.id = answers.author_id
+//     WHERE answers.question_id = $1;
+//   `;
+
+//   pool.query(queryText, [question_id])
+//     .then((result) => {
+//       res.send(result.rows);
+//     })
+//     .catch((err) => {
+//       console.log('Error fetching answers:', err);
+//       res.sendStatus(500);
+//     });
+// });
+
+
 
 
 // Route to edit a specific answer by ID

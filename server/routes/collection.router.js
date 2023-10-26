@@ -50,14 +50,25 @@ router.post("/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
-// Route to fetch saved questions for a user
+
+// Route to fetch saved questions for a user along with the total answers for each question
 router.get("/saved", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const query = `
-    SELECT questions.* 
+    SELECT 
+      questions.*,
+      COALESCE(answer_counts.total_answers, 0) AS total_answers
     FROM questions
+    LEFT JOIN (
+      SELECT 
+        question_id,
+        COUNT(id) AS total_answers
+      FROM answers
+      GROUP BY question_id
+    ) AS answer_counts ON questions.id = answer_counts.question_id
     JOIN user_saved_questions ON questions.id = user_saved_questions.question_id
-    WHERE user_saved_questions.user_id = $1;
+    WHERE user_saved_questions.user_id = $1
+    ORDER BY questions.created_at DESC;
   `;
 
   pool
@@ -70,5 +81,27 @@ router.get("/saved", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+
+
+// // Route to fetch saved questions for a user
+// router.get("/saved", rejectUnauthenticated, (req, res) => {
+//   const userId = req.user.id;
+//   const query = `
+//     SELECT questions.* 
+//     FROM questions
+//     JOIN user_saved_questions ON questions.id = user_saved_questions.question_id
+//     WHERE user_saved_questions.user_id = $1;
+//   `;
+
+//   pool
+//     .query(query, [userId])
+//     .then((result) => {
+//       res.send(result.rows);
+//     })
+//     .catch((err) => {
+//       console.log("Error fetching saved questions:", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 module.exports = router;

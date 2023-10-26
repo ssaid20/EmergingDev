@@ -109,7 +109,7 @@ export default function QuestionDetails() {
         author_id={user.id}
         totalAnswers={answers.length} // Derived from the Redux store
       />
-
+      {/*answer form */}
       <Answer />
     </>
   );
