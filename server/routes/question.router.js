@@ -7,46 +7,86 @@ const {
 } = require("../modules/authentication-middleware");
 
 // Route to post a new question
-router.post("/", rejectUnauthenticated, (req, res) => {
-  // Destructure the request body
+router.post("/", rejectUnauthenticated, async (req, res) => {
   const { title, explanation, tags } = req.body;
 
-  // SQL query to insert a new question into the database
   const insertQuestionQuery = `
         INSERT INTO "questions" ("title", "content", "author_id")
         VALUES ($1, $2, $3)
         RETURNING "id";
     `;
 
-  // Execute the query
-  pool
-    .query(insertQuestionQuery, [title, explanation, req.user.id])
-    .then((result) => {
-      const createdQuestionId = result.rows[0].id;
+  try {
+    const result = await pool.query(insertQuestionQuery, [title, explanation, req.user.id]);
+    const createdQuestionId = result.rows[0].id;
 
-      // If there are tags, associate them with the question
-      if (tags && tags.length > 0) {
-        const insertTagQuery = `
-                    INSERT INTO "tag_questions" ("tag_id", "question_id")
-                    VALUES ($1, $2);
-                `;
-        tags.forEach((tagId) => {
-          pool
-            .query(insertTagQuery, [tagId, createdQuestionId])
-            .catch((err) =>
-              console.log("Error associating tag with question:", err)
-            );
-        });
+    if (tags && tags.length > 0) {
+      for (let tagName of tags) {
+        // Check if tag exists in the tags table
+        let tagResult = await pool.query('SELECT id FROM "tags" WHERE name = $1', [tagName]);
+
+        let tagId;
+        if (tagResult.rows.length === 0) {
+          // If tag doesn't exist, insert it
+          const insertTagResult = await pool.query('INSERT INTO "tags" (name) VALUES ($1) RETURNING id', [tagName]);
+          tagId = insertTagResult.rows[0].id;
+        } else {
+          tagId = tagResult.rows[0].id;
+        }
+
+        // Associate the tag with the question
+        await pool.query('INSERT INTO "tag_questions" ("tag_id", "question_id") VALUES ($1, $2)', [tagId, createdQuestionId]);
       }
+    }
 
-      // Send a success status
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      console.log("Error posting question:", err);
-      res.sendStatus(500);
-    });
+    res.sendStatus(201);
+  } catch (err) {
+    console.log("Error posting question:", err);
+    res.sendStatus(500);
+  }
 });
+
+
+// router.post("/", rejectUnauthenticated, (req, res) => {
+//   // Destructure the request body
+//   const { title, explanation, tags } = req.body;
+
+//   // SQL query to insert a new question into the database
+//   const insertQuestionQuery = `
+//         INSERT INTO "questions" ("title", "content", "author_id")
+//         VALUES ($1, $2, $3)
+//         RETURNING "id";
+//     `;
+
+//   // Execute the query
+//   pool
+//     .query(insertQuestionQuery, [title, explanation, req.user.id])
+//     .then((result) => {
+//       const createdQuestionId = result.rows[0].id;
+
+//       // If there are tags, associate them with the question
+//       if (tags && tags.length > 0) {
+//         const insertTagQuery = `
+//                     INSERT INTO "tag_questions" ("tag_id", "question_id")
+//                     VALUES ($1, $2);
+//                 `;
+//         tags.forEach((tagId) => {
+//           pool
+//             .query(insertTagQuery, [tagId, createdQuestionId])
+//             .catch((err) =>
+//               console.log("Error associating tag with question:", err)
+//             );
+//         });
+//       }
+
+//       // Send a success status
+//       res.sendStatus(201);
+//     })
+//     .catch((err) => {
+//       console.log("Error posting question:", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 router.get("/:id", (req, res) => {
   const questionId = req.params.id;
