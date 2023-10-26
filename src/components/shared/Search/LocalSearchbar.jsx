@@ -1,6 +1,5 @@
 import { Input } from "../../ui/input";
 import React, { useEffect, useState } from "react";
-import { formUrlQuery, removeKeysFromQuery } from "../../../lib/utils"; 
 
 const LocalSearchbar = ({
     route,
@@ -14,30 +13,7 @@ const LocalSearchbar = ({
   const query = searchParams.get('q');
   const [search, setSearch] = useState(query || '');
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if(search) {
-        const newUrl = formUrlQuery({
-          params: searchParams.toString(),
-          key: 'q',
-          value: search
-        });
 
-        window.history.pushState({}, '', newUrl);
-      } else {
-        if(pathname === route) {
-          const newUrl = removeKeysFromQuery({
-            params: searchParams.toString(),
-            keysToRemove: ['q']
-          });
-
-          window.history.pushState({}, '', newUrl);
-        }
-      }
-    }, 300);
-    
-    return () => clearTimeout(delayDebounceFn);
-  }, [search, route, pathname, searchParams, query]);
 
   return (
     <div

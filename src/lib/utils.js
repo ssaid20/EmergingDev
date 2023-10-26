@@ -60,22 +60,6 @@ export const formatAndDivideNumber = (num) => {
   }
 };
 
-export const formUrlQuery = ({ params, key, value }) => {
-  const currentUrl = qs.parse(params);
-  currentUrl[key] = value;
-  const queryString = qs.stringify(currentUrl, { skipNull: true });
-  return `${window.location.pathname}?${queryString}`;
-}
-
-
-export const removeKeysFromQuery = ({ params, keysToRemove }) => {
-  const currentUrl = qs.parse(params);
-  keysToRemove.forEach((key) => {
-    delete currentUrl[key];
-  });
-  const queryString = qs.stringify(currentUrl, { skipNull: true });
-  return `${window.location.pathname}?${queryString}`;
-}
 
 
 export const assignBadges = (params) => {

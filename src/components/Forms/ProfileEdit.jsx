@@ -126,12 +126,7 @@ const ProfileEdit = () => {
         <div className="mt-7 flex justify-end">
           <Button type="submit" className="primary-gradient w-fit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
-            onClick={() => {
-              toast({
-                title: "Profile updated successfully",
-                description: "Your profile has been updated successfully",
-              })
-            }}
+            
           </Button>
         </div>
       </form>
