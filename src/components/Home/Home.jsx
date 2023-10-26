@@ -48,7 +48,7 @@ export default function Home() {
               author={question.author}
               upvotes={question.upvotes}
               views={question.views}
-              answers={question.answers}
+              answers={question.total_answers}
               created_at={question.created_at}
 
             />

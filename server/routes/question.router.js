@@ -139,9 +139,20 @@ router.get("/", (req, res) => {
       questions.title, 
       questions.content, 
       questions.created_at, 
-      u.username AS author
+      questions.views,
+      questions.upvotes,
+      questions.downvotes,
+      u.username AS author,
+      u.id AS author_id,
+      COUNT(answers.id) AS total_answers,
+      ARRAY_AGG(DISTINCT tags.name) FILTER (WHERE tags.name IS NOT NULL) AS tags
     FROM questions
-    JOIN "user" AS u ON u.id = questions.author_id;`;
+    LEFT JOIN tag_questions ON tag_questions.question_id = questions.id
+    LEFT JOIN tags ON tags.id = tag_questions.tag_id
+    LEFT JOIN answers ON answers.question_id = questions.id
+    JOIN "user" AS u ON u.id = questions.author_id
+    GROUP BY questions.id, u.username, u.id
+    ORDER BY questions.created_at DESC;`;
 
   pool
     .query(queryText)
@@ -151,6 +162,28 @@ router.get("/", (req, res) => {
       res.sendStatus(500);
     });
 });
+
+
+
+// router.get("/", (req, res) => {
+//   const queryText = `
+//     SELECT 
+//       questions.id, 
+//       questions.title, 
+//       questions.content, 
+//       questions.created_at, 
+//       u.username AS author
+//     FROM questions
+//     JOIN "user" AS u ON u.id = questions.author_id;`;
+
+//   pool
+//     .query(queryText)
+//     .then((result) => res.send(result.rows))
+//     .catch((err) => {
+//       console.log("error on router get all questions", err);
+//       res.sendStatus(500);
+//     });
+// });
 
 // Route to edit a specific question by ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
