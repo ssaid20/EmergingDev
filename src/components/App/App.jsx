@@ -9,7 +9,6 @@ import RegisterPage from "../RegisterPage/RegisterPage";
 import AskQuestion from "../Ask-Question/Ask-Question";
 import Layout from "../Layout/Layout";
 import Collection from "../Collection/Collection";
-import Community from "../Community/Community";
 import Home from "../Home/Home";
 import Profile from "../Profile/Profile";
 import Tags from "../Tags/Tags";
@@ -56,10 +55,6 @@ function App() {
           <Route
             path="/collection"
             element={<ProtectedRoute element={<Collection />} />}
-          />
-          <Route
-            path="/community"
-            element={<ProtectedRoute element={<Community />} />}
           />
           <Route
             path="/user"

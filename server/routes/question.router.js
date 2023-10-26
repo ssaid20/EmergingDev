@@ -90,55 +90,6 @@ GROUP BY questions.id, u.username, u.id;`;
     });
 });
 
-
-
-
-
-// router.get("/:id", (req, res) => {
-//   const questionId = req.params.id;
-//   console.log("Question ID:", questionId);
-
-//   // SQL query to fetch question details, tags, answers, author's username, and votes
-//   const queryText = `
-//   SELECT 
-//   questions.id, 
-//   questions.title, 
-//   questions.content, 
-//   questions.created_at, 
-//   questions.upvotes,
-//   questions.downvotes,
-//   EXISTS(SELECT 1 FROM question_upvotes WHERE question_id = questions.id AND user_id = $2) AS hasupVoted,
-//   EXISTS(SELECT 1 FROM question_downvotes WHERE question_id = questions.id AND user_id = $2) AS hasdownVoted,
-//   ARRAY_AGG(DISTINCT tags.name) AS tags,
-//   ARRAY_AGG(DISTINCT answers.content) AS answers,
-//   u.username AS author,
-//   u.id AS author_id
-// FROM questions
-// LEFT JOIN tag_questions ON tag_questions.question_id = questions.id
-// LEFT JOIN tags ON tags.id = tag_questions.tag_id
-// LEFT JOIN answers ON answers.question_id = questions.id
-// JOIN "user" AS u ON u.id = questions.author_id
-// WHERE questions.id = $1
-// GROUP BY questions.id, u.username, u.id;`;
-
-//   const userId = req.user.id; // Assuming you have the user's ID stored in req.user.id
-
-//   // Execute the query
-//   pool
-//     .query(queryText, [questionId, userId])
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((error) => {
-//       console.log("error on server-side question details GET", error);
-//       res.sendStatus(500);
-//     });
-// });
-
-
-
-
-
 // Route to get all questions
 ///TODO: Update it to access votes
 router.get("/", (req, res) => {

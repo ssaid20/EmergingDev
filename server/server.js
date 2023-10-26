@@ -13,6 +13,7 @@ const questionRouter = require('./routes/question.router')
 const answerRouter = require('./routes/answer.router')
 const collectionRouter = require('./routes/collection.router')
 const votesRouter = require('./routes/votes.router')
+const tagsRouter = require('./routes/tags.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,6 +32,7 @@ app.use('/api/question', questionRouter);
 app.use('/api/answer', answerRouter);
 app.use('/api/collection', collectionRouter);
 app.use('/api/votes', votesRouter);
+app.use('/api/tags', tagsRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -89,7 +89,7 @@ const LeftSidebar = () => {
       {/* If a user is logged in, show the logout button */}
       {user.id && (
         <>
-          <LogOutButton className="navLink" />
+          <LogOutButton className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none" />
         </>
       )}
     </section>

@@ -11,11 +11,11 @@ export const sidebarLinks = [
     route: "/home",
     label: "Home",
   },
-  {
-    imgURL: "/assets/icons/users.svg",
-    route: "/community",
-    label: "Community",
-  },
+  // {
+  //   imgURL: "/assets/icons/users.svg",
+  //   route: "/community",
+  //   label: "Community",
+  // },
   {
     imgURL: "/assets/icons/star.svg",
     route: "/collection",

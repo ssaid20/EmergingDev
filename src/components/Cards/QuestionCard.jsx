@@ -68,7 +68,7 @@ console.log("store", store)
           title={` - asked ${getTimestamp(created_at)}`}
           href={isUserAuthor ? `/profile` : `/profile/${author_id}`}
           isAuthor
-          textStyles="body-medium text-dark400_light700"
+          textStyles="body-medium text-dark400_light800"
         />
 
         <Metric
