@@ -51,7 +51,7 @@ const AllAnswers = ({ author_id, totalAnswers }) => {
                     </p>
                   </div>
                 </Link>
-                <div className="flex justify-end">VOTING</div>
+                {/* <div className="flex justify-end">VOTING</div> */}
               </div>
             </div>
             <ParseHTML data={answer.content} />

@@ -80,7 +80,7 @@ const MobileNav = () => {
             <NavContent />
           </SheetClose>
 
-          <Button>
+          {/* <Button>
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link to="/login">
@@ -98,7 +98,7 @@ const MobileNav = () => {
                 </Link>
               </SheetClose>
             </div>
-          </Button>
+          </Button> */}
         </div>
       </SheetContent>
     </Sheet>

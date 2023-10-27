@@ -83,13 +83,6 @@ export default function QuestionDetails() {
           title=" Answers"
           textStyles="small-medium text-dark400_light800"
         />
-        <Metric
-          imgUrl="/assets/icons/eye.svg"
-          alt="eye"
-          value={formatAndDivideNumber(questionDetails.views)}
-          title=" Views"
-          textStyles="small-medium text-dark400_light800"
-        />
       </div>
 
       <ParseHTML data={questionDetails.content} />
