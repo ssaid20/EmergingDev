@@ -74,6 +74,7 @@ function* deleteQuestion(action) {
   try {
     yield axios.delete(`/api/question/${action.payload.id}`);
     yield put({ type: "DELETE_QUESTION_SUCCESS" });
+    yield put({ type: "FETCH_ALL_QUESTIONS_REQUEST" });
   } catch (error) {
     yield put({ type: "DELETE_QUESTION_FAILURE", error: error.message });
   }
@@ -84,19 +85,42 @@ function* voteQuestion(action) {
   try {
     const response = yield axios.post(`/api/votes/${action.payload.questionId}`, action.payload);
     yield put({ type: "VOTE_QUESTION_SUCCESS", payload: response.data });
+    yield put({ type: "FETCH_QUESTION_DETAILS", payload: response.data });
   } catch (error) {
     yield put({ type: "VOTE_QUESTION_FAILURE", error: error.message });
   }
 }
 
+// function* toggleSaveQuestion(action) {
+//   try {
+//     const response = yield axios.post(`/api/collection/${action.payload.questionId}`, action.payload);
+//     yield put({ type: "TOGGLE_SAVE_QUESTION_SUCCESS", payload: response.data });
+    
+//   } catch (error) {
+//     yield put({ type: "TOGGLE_SAVE_QUESTION_FAILURE", error: error.message });
+//   }
+// }
 function* toggleSaveQuestion(action) {
   try {
     const response = yield axios.post(`/api/collection/${action.payload.questionId}`, action.payload);
-    yield put({ type: "TOGGLE_SAVE_QUESTION_SUCCESS", payload: response.data });
+    
+    // Assuming the response contains the updated status of the question
+    const updatedQuestion = response.data;
+
+    yield put({ type: "TOGGLE_SAVE_QUESTION_SUCCESS", payload: updatedQuestion });
+    
+    // Dispatch another action to update the specific question in your Redux state
+    yield put({ type: "UPDATE_QUESTION", payload: updatedQuestion });
+
+    toast({
+      title: "Question saved",
+      description: "You've saved the question.",
+    });
   } catch (error) {
     yield put({ type: "TOGGLE_SAVE_QUESTION_FAILURE", error: error.message });
   }
 }
+
 
 
 function* fetchSavedQuestions() {

@@ -186,26 +186,13 @@ router.get("/", (req, res) => {
 // });
 
 // Route to edit a specific question by ID
-router.put("/:id", rejectUnauthenticated, (req, res) => {
-  const { title, explanation, tags } = req.body;
-  const questionId = req.params.id;
+// ...
 
-  // SQL query to update the question details
-  const updateQuestionQuery = `
-    UPDATE "questions"
-    SET "title" = $1, "content" = $2
-    WHERE "id" = $3;
-  `;
+// Route to delete a specific question by ID
+// ...
 
-  // Execute the query
-  pool
-    .query(updateQuestionQuery, [title, explanation, questionId])
-    .then(() => res.sendStatus(200))
-    .catch((err) => {
-      console.log("Error updating question:", err);
-      res.sendStatus(500);
-    });
-});
+// Route to delete a specific question by ID
+// ...
 
 // Route to delete a specific question by ID
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
@@ -223,6 +210,24 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
     WHERE "question_id" = $1;
   `;
 
+  // SQL query to delete downvotes references in question_downvotes
+  const deleteQuestionDownvotesQuery = `
+    DELETE FROM "question_downvotes"
+    WHERE "question_id" = $1;
+  `;
+
+  // SQL query to delete answers associated with the question
+  const deleteAnswersQuery = `
+    DELETE FROM "answers"
+    WHERE "question_id" = $1;
+  `;
+
+  // SQL query to delete tags associated with the question in the tag_questions table
+  const deleteTagQuestionsQuery = `
+    DELETE FROM "tag_questions"
+    WHERE "question_id" = $1;
+  `;
+
   // SQL query to delete the question
   const deleteQuestionQuery = `
     DELETE FROM "questions"
@@ -237,6 +242,18 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
       return pool.query(deleteQuestionUpvotesQuery, [questionId]);
     })
     .then(() => {
+      // Then, delete downvotes references in question_downvotes
+      return pool.query(deleteQuestionDownvotesQuery, [questionId]);
+    })
+    .then(() => {
+      // Then, delete answers associated with the question
+      return pool.query(deleteAnswersQuery, [questionId]);
+    })
+    .then(() => {
+      // Then, delete tags associated with the question in the tag_questions table
+      return pool.query(deleteTagQuestionsQuery, [questionId]);
+    })
+    .then(() => {
       // Finally, delete the question
       return pool.query(deleteQuestionQuery, [questionId]);
     })
@@ -246,6 +263,20 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// ...
+
+
+
+
+// ...
+
+
+
+// ...
+
+
+
 
 
 // router.delete("/:id", rejectUnauthenticated, (req, res) => {

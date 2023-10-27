@@ -56,7 +56,8 @@ console.log("store", store)
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags &&
           tags.map((tag) => (
-            <RenderTag key={tag.id} id={tag.id} name={tag.name} />
+            
+            <RenderTag key={tag.id} id={tag.id} name={tag} />
           ))}
       </div>
 

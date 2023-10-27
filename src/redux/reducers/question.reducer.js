@@ -47,15 +47,43 @@ const questionReducer = (state = initialState, action) => {
       return { ...state, isSubmitting: false, postSuccess: true };
     case "DELETE_QUESTION_FAILURE":
       return { ...state, isSubmitting: false, postError: action.error };
+    // case "VOTE_QUESTION_SUCCESS":
+    //   return {
+    //     ...state,
+    //     votes: {
+    //       ...state.votes,
+    //       hasupVoted: action.payload,
+    //       hasdownVoted: action.payload.hasdownVoted,
+    //     },
+    //   };
+    // case "TOGGLE_SAVE_QUESTION_SUCCESS":
+    //   return {
+    //     ...state,
+    //     votes: {
+    //       ...state.votes,
+    //       hassaved: action.payload.hassaved,
+    //     },
+    //   };
+    case "UPDATE_QUESTION": {
+      const updatedQuestions = state.allQuestions.map((question) => {
+        if (question.id === action.payload.id) {
+          return action.payload;
+        }
+        return question;
+      });
+      return { ...state, allQuestions: updatedQuestions };
+    }
+
     case "VOTE_QUESTION_SUCCESS":
       return {
         ...state,
         votes: {
           ...state.votes,
-          hasupVoted: action.payload,
+          hasupVoted: action.payload.hasupVoted,
           hasdownVoted: action.payload.hasdownVoted,
         },
       };
+
     case "TOGGLE_SAVE_QUESTION_SUCCESS":
       return {
         ...state,
@@ -72,3 +100,6 @@ const questionReducer = (state = initialState, action) => {
 };
 
 export default questionReducer;
+
+
+

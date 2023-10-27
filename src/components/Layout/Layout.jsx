@@ -5,6 +5,7 @@ import Nav from '../shared/Nav/Nav';
 import LogOutButton from '../LogOutButton/LogOutButton'; 
 import LoginPage from '../LoginPage/LoginPage';
 import { Toaster } from '../ui/toaster';
+import RegisterPage from '../RegisterPage/RegisterPage';
 
 const Layout = ({ children }) => {
   const user = useSelector((store) => store.user);
@@ -13,6 +14,7 @@ const Layout = ({ children }) => {
     <>
       {/* If no user is logged in, show these links */}
       {!user.id && (
+          // <RegisterPage />
           <LoginPage />
       )}
 
